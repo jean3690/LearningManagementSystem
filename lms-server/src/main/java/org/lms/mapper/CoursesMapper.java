@@ -1,0 +1,26 @@
+package org.lms.mapper;
+
+
+import org.lms.entity.Courses;
+
+/**
+* @author jeang
+* @description 针对表【courses(课程基本信息表)】的数据库操作Mapper
+* @createDate 2025-09-13 23:04:45
+* @Entity .entity.Courses
+*/
+public interface CoursesMapper {
+
+    int deleteByPrimaryKey(Long id);
+
+    int insert(Courses record);
+
+    int insertSelective(Courses record);
+
+    Courses selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Courses record);
+
+    int updateByPrimaryKey(Courses record);
+
+}

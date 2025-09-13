@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.CoursesMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.Courses">
+            <id property="id" column="id" />
+            <result property="title" column="title" />
+            <result property="subtitle" column="subtitle" />
+            <result property="description" column="description" />
+            <result property="instructorId" column="instructor_id" />
+            <result property="categoryId" column="category_id" />
+            <result property="level" column="level" />
+            <result property="language" column="language" />
+            <result property="thumbnailUrl" column="thumbnail_url" />
+            <result property="videoPreviewUrl" column="video_preview_url" />
+            <result property="durationHours" column="duration_hours" />
+            <result property="isDraft" column="is_draft" />
+            <result property="isApproved" column="is_approved" />
+            <result property="approvalDate" column="approval_date" />
+            <result property="rating" column="rating" />
+            <result property="totalRatings" column="total_ratings" />
+            <result property="totalEnrollments" column="total_enrollments" />
+            <result property="price" column="price" />
+            <result property="discountPrice" column="discount_price" />
+            <result property="isFree" column="is_free" />
+            <result property="willIssueCertificate" column="will_issue_certificate" />
+            <result property="requirements" column="requirements" />
+            <result property="learningOutcomes" column="learning_outcomes" />
+            <result property="targetAudience" column="target_audience" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,subtitle,description,instructor_id,category_id,
+        level,language,thumbnail_url,video_preview_url,duration_hours,
+        is_draft,is_approved,approval_date,rating,total_ratings,
+        total_enrollments,price,discount_price,is_free,will_issue_certificate,
+        requirements,learning_outcomes,target_audience,created_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from courses
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from courses
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Courses" useGeneratedKeys="true">
+        insert into courses
+        ( id,title,subtitle,description,instructor_id,category_id,
+        level,language,thumbnail_url,video_preview_url,duration_hours,
+        is_draft,is_approved,approval_date,rating,total_ratings,
+        total_enrollments,price,discount_price,is_free,will_issue_certificate,
+        requirements,learning_outcomes,target_audience,created_at)
+        values (#{id},#{title},#{subtitle},#{description},#{instructorId},#{categoryId},
+        #{level},#{language},#{thumbnailUrl},#{videoPreviewUrl},#{durationHours},
+        #{isDraft},#{isApproved},#{approvalDate},#{rating},#{totalRatings},
+        #{totalEnrollments},#{price},#{discountPrice},#{isFree},#{willIssueCertificate},
+        #{requirements},#{learningOutcomes},#{targetAudience},#{createdAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Courses" useGeneratedKeys="true">
+        insert into courses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="title != null">title,</if>
+                <if test="subtitle != null">subtitle,</if>
+                <if test="description != null">description,</if>
+                <if test="instructorId != null">instructor_id,</if>
+                <if test="categoryId != null">category_id,</if>
+                <if test="level != null">level,</if>
+                <if test="language != null">language,</if>
+                <if test="thumbnailUrl != null">thumbnail_url,</if>
+                <if test="videoPreviewUrl != null">video_preview_url,</if>
+                <if test="durationHours != null">duration_hours,</if>
+                <if test="isDraft != null">is_draft,</if>
+                <if test="isApproved != null">is_approved,</if>
+                <if test="approvalDate != null">approval_date,</if>
+                <if test="rating != null">rating,</if>
+                <if test="totalRatings != null">total_ratings,</if>
+                <if test="totalEnrollments != null">total_enrollments,</if>
+                <if test="price != null">price,</if>
+                <if test="discountPrice != null">discount_price,</if>
+                <if test="isFree != null">is_free,</if>
+                <if test="willIssueCertificate != null">will_issue_certificate,</if>
+                <if test="requirements != null">requirements,</if>
+                <if test="learningOutcomes != null">learning_outcomes,</if>
+                <if test="targetAudience != null">target_audience,</if>
+                <if test="createdAt != null">created_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="title != null">#{title},</if>
+                <if test="subtitle != null">#{subtitle},</if>
+                <if test="description != null">#{description},</if>
+                <if test="instructorId != null">#{instructorId},</if>
+                <if test="categoryId != null">#{categoryId},</if>
+                <if test="level != null">#{level},</if>
+                <if test="language != null">#{language},</if>
+                <if test="thumbnailUrl != null">#{thumbnailUrl},</if>
+                <if test="videoPreviewUrl != null">#{videoPreviewUrl},</if>
+                <if test="durationHours != null">#{durationHours},</if>
+                <if test="isDraft != null">#{isDraft},</if>
+                <if test="isApproved != null">#{isApproved},</if>
+                <if test="approvalDate != null">#{approvalDate},</if>
+                <if test="rating != null">#{rating},</if>
+                <if test="totalRatings != null">#{totalRatings},</if>
+                <if test="totalEnrollments != null">#{totalEnrollments},</if>
+                <if test="price != null">#{price},</if>
+                <if test="discountPrice != null">#{discountPrice},</if>
+                <if test="isFree != null">#{isFree},</if>
+                <if test="willIssueCertificate != null">#{willIssueCertificate},</if>
+                <if test="requirements != null">#{requirements},</if>
+                <if test="learningOutcomes != null">#{learningOutcomes},</if>
+                <if test="targetAudience != null">#{targetAudience},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.Courses">
+        update courses
+        <set>
+                <if test="title != null">
+                    title = #{title},
+                </if>
+                <if test="subtitle != null">
+                    subtitle = #{subtitle},
+                </if>
+                <if test="description != null">
+                    description = #{description},
+                </if>
+                <if test="instructorId != null">
+                    instructor_id = #{instructorId},
+                </if>
+                <if test="categoryId != null">
+                    category_id = #{categoryId},
+                </if>
+                <if test="level != null">
+                    level = #{level},
+                </if>
+                <if test="language != null">
+                    language = #{language},
+                </if>
+                <if test="thumbnailUrl != null">
+                    thumbnail_url = #{thumbnailUrl},
+                </if>
+                <if test="videoPreviewUrl != null">
+                    video_preview_url = #{videoPreviewUrl},
+                </if>
+                <if test="durationHours != null">
+                    duration_hours = #{durationHours},
+                </if>
+                <if test="isDraft != null">
+                    is_draft = #{isDraft},
+                </if>
+                <if test="isApproved != null">
+                    is_approved = #{isApproved},
+                </if>
+                <if test="approvalDate != null">
+                    approval_date = #{approvalDate},
+                </if>
+                <if test="rating != null">
+                    rating = #{rating},
+                </if>
+                <if test="totalRatings != null">
+                    total_ratings = #{totalRatings},
+                </if>
+                <if test="totalEnrollments != null">
+                    total_enrollments = #{totalEnrollments},
+                </if>
+                <if test="price != null">
+                    price = #{price},
+                </if>
+                <if test="discountPrice != null">
+                    discount_price = #{discountPrice},
+                </if>
+                <if test="isFree != null">
+                    is_free = #{isFree},
+                </if>
+                <if test="willIssueCertificate != null">
+                    will_issue_certificate = #{willIssueCertificate},
+                </if>
+                <if test="requirements != null">
+                    requirements = #{requirements},
+                </if>
+                <if test="learningOutcomes != null">
+                    learning_outcomes = #{learningOutcomes},
+                </if>
+                <if test="targetAudience != null">
+                    target_audience = #{targetAudience},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.Courses">
+        update courses
+        set 
+            title =  #{title},
+            subtitle =  #{subtitle},
+            description =  #{description},
+            instructor_id =  #{instructorId},
+            category_id =  #{categoryId},
+            level =  #{level},
+            language =  #{language},
+            thumbnail_url =  #{thumbnailUrl},
+            video_preview_url =  #{videoPreviewUrl},
+            duration_hours =  #{durationHours},
+            is_draft =  #{isDraft},
+            is_approved =  #{isApproved},
+            approval_date =  #{approvalDate},
+            rating =  #{rating},
+            total_ratings =  #{totalRatings},
+            total_enrollments =  #{totalEnrollments},
+            price =  #{price},
+            discount_price =  #{discountPrice},
+            is_free =  #{isFree},
+            will_issue_certificate =  #{willIssueCertificate},
+            requirements =  #{requirements},
+            learning_outcomes =  #{learningOutcomes},
+            target_audience =  #{targetAudience},
+            created_at =  #{createdAt}
+        where   id = #{id} 
+    </update>
+</mapper>

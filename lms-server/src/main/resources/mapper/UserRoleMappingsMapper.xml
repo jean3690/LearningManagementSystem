@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.UserRoleMappingsMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.UserRoleMappings">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="roleId" column="role_id" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,role_id,created_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_role_mappings
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from user_role_mappings
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.UserRoleMappings" useGeneratedKeys="true">
+        insert into user_role_mappings
+        ( id,user_id,role_id,created_at)
+        values (#{id},#{userId},#{roleId},#{createdAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.UserRoleMappings" useGeneratedKeys="true">
+        insert into user_role_mappings
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="roleId != null">role_id,</if>
+                <if test="createdAt != null">created_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="roleId != null">#{roleId},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.UserRoleMappings">
+        update user_role_mappings
+        <set>
+                <if test="userId != null">
+                    user_id = #{userId},
+                </if>
+                <if test="roleId != null">
+                    role_id = #{roleId},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.UserRoleMappings">
+        update user_role_mappings
+        set 
+            user_id =  #{userId},
+            role_id =  #{roleId},
+            created_at =  #{createdAt}
+        where   id = #{id} 
+    </update>
+</mapper>

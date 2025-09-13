@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.BusinessProfilesMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.BusinessProfiles">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="companyName" column="company_name" />
+            <result property="companySize" column="company_size" />
+            <result property="industry" column="industry" />
+            <result property="taxId" column="tax_id" />
+            <result property="website" column="website" />
+            <result property="addressLine1" column="address_line1" />
+            <result property="addressLine2" column="address_line2" />
+            <result property="city" column="city" />
+            <result property="state" column="state" />
+            <result property="country" column="country" />
+            <result property="postalCode" column="postal_code" />
+            <result property="contactPerson" column="contact_person" />
+            <result property="contactPhone" column="contact_phone" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,company_name,company_size,industry,tax_id,
+        website,address_line1,address_line2,city,state,
+        country,postal_code,contact_person,contact_phone,created_at,
+        updated_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from business_profiles
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from business_profiles
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.BusinessProfiles" useGeneratedKeys="true">
+        insert into business_profiles
+        ( id,user_id,company_name,company_size,industry,tax_id,
+        website,address_line1,address_line2,city,state,
+        country,postal_code,contact_person,contact_phone,created_at,
+        updated_at)
+        values (#{id},#{userId},#{companyName},#{companySize},#{industry},#{taxId},
+        #{website},#{addressLine1},#{addressLine2},#{city},#{state},
+        #{country},#{postalCode},#{contactPerson},#{contactPhone},#{createdAt},
+        #{updatedAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.BusinessProfiles" useGeneratedKeys="true">
+        insert into business_profiles
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="companyName != null">company_name,</if>
+                <if test="companySize != null">company_size,</if>
+                <if test="industry != null">industry,</if>
+                <if test="taxId != null">tax_id,</if>
+                <if test="website != null">website,</if>
+                <if test="addressLine1 != null">address_line1,</if>
+                <if test="addressLine2 != null">address_line2,</if>
+                <if test="city != null">city,</if>
+                <if test="state != null">state,</if>
+                <if test="country != null">country,</if>
+                <if test="postalCode != null">postal_code,</if>
+                <if test="contactPerson != null">contact_person,</if>
+                <if test="contactPhone != null">contact_phone,</if>
+                <if test="createdAt != null">created_at,</if>
+                <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="companyName != null">#{companyName},</if>
+                <if test="companySize != null">#{companySize},</if>
+                <if test="industry != null">#{industry},</if>
+                <if test="taxId != null">#{taxId},</if>
+                <if test="website != null">#{website},</if>
+                <if test="addressLine1 != null">#{addressLine1},</if>
+                <if test="addressLine2 != null">#{addressLine2},</if>
+                <if test="city != null">#{city},</if>
+                <if test="state != null">#{state},</if>
+                <if test="country != null">#{country},</if>
+                <if test="postalCode != null">#{postalCode},</if>
+                <if test="contactPerson != null">#{contactPerson},</if>
+                <if test="contactPhone != null">#{contactPhone},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+                <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.BusinessProfiles">
+        update business_profiles
+        <set>
+                <if test="userId != null">
+                    user_id = #{userId},
+                </if>
+                <if test="companyName != null">
+                    company_name = #{companyName},
+                </if>
+                <if test="companySize != null">
+                    company_size = #{companySize},
+                </if>
+                <if test="industry != null">
+                    industry = #{industry},
+                </if>
+                <if test="taxId != null">
+                    tax_id = #{taxId},
+                </if>
+                <if test="website != null">
+                    website = #{website},
+                </if>
+                <if test="addressLine1 != null">
+                    address_line1 = #{addressLine1},
+                </if>
+                <if test="addressLine2 != null">
+                    address_line2 = #{addressLine2},
+                </if>
+                <if test="city != null">
+                    city = #{city},
+                </if>
+                <if test="state != null">
+                    state = #{state},
+                </if>
+                <if test="country != null">
+                    country = #{country},
+                </if>
+                <if test="postalCode != null">
+                    postal_code = #{postalCode},
+                </if>
+                <if test="contactPerson != null">
+                    contact_person = #{contactPerson},
+                </if>
+                <if test="contactPhone != null">
+                    contact_phone = #{contactPhone},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+                <if test="updatedAt != null">
+                    updated_at = #{updatedAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.BusinessProfiles">
+        update business_profiles
+        set 
+            user_id =  #{userId},
+            company_name =  #{companyName},
+            company_size =  #{companySize},
+            industry =  #{industry},
+            tax_id =  #{taxId},
+            website =  #{website},
+            address_line1 =  #{addressLine1},
+            address_line2 =  #{addressLine2},
+            city =  #{city},
+            state =  #{state},
+            country =  #{country},
+            postal_code =  #{postalCode},
+            contact_person =  #{contactPerson},
+            contact_phone =  #{contactPhone},
+            created_at =  #{createdAt},
+            updated_at =  #{updatedAt}
+        where   id = #{id} 
+    </update>
+</mapper>

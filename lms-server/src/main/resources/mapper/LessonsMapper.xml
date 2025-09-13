@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.LessonsMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.Lessons">
+            <id property="id" column="id" />
+            <result property="moduleId" column="module_id" />
+            <result property="title" column="title" />
+            <result property="contentType" column="content_type" />
+            <result property="content" column="content" />
+            <result property="videoUrl" column="video_url" />
+            <result property="videoDuration" column="video_duration" />
+            <result property="attachmentUrl" column="attachment_url" />
+            <result property="sortOrder" column="sort_order" />
+            <result property="isPreviewAvailable" column="is_preview_available" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,module_id,title,content_type,content,video_url,
+        video_duration,attachment_url,sort_order,is_preview_available,created_at,
+        updated_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lessons
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from lessons
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Lessons" useGeneratedKeys="true">
+        insert into lessons
+        ( id,module_id,title,content_type,content,video_url,
+        video_duration,attachment_url,sort_order,is_preview_available,created_at,
+        updated_at)
+        values (#{id},#{moduleId},#{title},#{contentType},#{content},#{videoUrl},
+        #{videoDuration},#{attachmentUrl},#{sortOrder},#{isPreviewAvailable},#{createdAt},
+        #{updatedAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Lessons" useGeneratedKeys="true">
+        insert into lessons
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="moduleId != null">module_id,</if>
+                <if test="title != null">title,</if>
+                <if test="contentType != null">content_type,</if>
+                <if test="content != null">content,</if>
+                <if test="videoUrl != null">video_url,</if>
+                <if test="videoDuration != null">video_duration,</if>
+                <if test="attachmentUrl != null">attachment_url,</if>
+                <if test="sortOrder != null">sort_order,</if>
+                <if test="isPreviewAvailable != null">is_preview_available,</if>
+                <if test="createdAt != null">created_at,</if>
+                <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="moduleId != null">#{moduleId},</if>
+                <if test="title != null">#{title},</if>
+                <if test="contentType != null">#{contentType},</if>
+                <if test="content != null">#{content},</if>
+                <if test="videoUrl != null">#{videoUrl},</if>
+                <if test="videoDuration != null">#{videoDuration},</if>
+                <if test="attachmentUrl != null">#{attachmentUrl},</if>
+                <if test="sortOrder != null">#{sortOrder},</if>
+                <if test="isPreviewAvailable != null">#{isPreviewAvailable},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+                <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.Lessons">
+        update lessons
+        <set>
+                <if test="moduleId != null">
+                    module_id = #{moduleId},
+                </if>
+                <if test="title != null">
+                    title = #{title},
+                </if>
+                <if test="contentType != null">
+                    content_type = #{contentType},
+                </if>
+                <if test="content != null">
+                    content = #{content},
+                </if>
+                <if test="videoUrl != null">
+                    video_url = #{videoUrl},
+                </if>
+                <if test="videoDuration != null">
+                    video_duration = #{videoDuration},
+                </if>
+                <if test="attachmentUrl != null">
+                    attachment_url = #{attachmentUrl},
+                </if>
+                <if test="sortOrder != null">
+                    sort_order = #{sortOrder},
+                </if>
+                <if test="isPreviewAvailable != null">
+                    is_preview_available = #{isPreviewAvailable},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+                <if test="updatedAt != null">
+                    updated_at = #{updatedAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.Lessons">
+        update lessons
+        set 
+            module_id =  #{moduleId},
+            title =  #{title},
+            content_type =  #{contentType},
+            content =  #{content},
+            video_url =  #{videoUrl},
+            video_duration =  #{videoDuration},
+            attachment_url =  #{attachmentUrl},
+            sort_order =  #{sortOrder},
+            is_preview_available =  #{isPreviewAvailable},
+            created_at =  #{createdAt},
+            updated_at =  #{updatedAt}
+        where   id = #{id} 
+    </update>
+</mapper>

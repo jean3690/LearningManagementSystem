@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.NotificationsMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.Notifications">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="title" column="title" />
+            <result property="message" column="message" />
+            <result property="type" column="type" />
+            <result property="isRead" column="is_read" />
+            <result property="relatedEntityType" column="related_entity_type" />
+            <result property="relatedEntityId" column="related_entity_id" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,title,message,type,is_read,
+        related_entity_type,related_entity_id,created_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from notifications
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from notifications
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Notifications" useGeneratedKeys="true">
+        insert into notifications
+        ( id,user_id,title,message,type,is_read,
+        related_entity_type,related_entity_id,created_at)
+        values (#{id},#{userId},#{title},#{message},#{type},#{isRead},
+        #{relatedEntityType},#{relatedEntityId},#{createdAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Notifications" useGeneratedKeys="true">
+        insert into notifications
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="title != null">title,</if>
+                <if test="message != null">message,</if>
+                <if test="type != null">type,</if>
+                <if test="isRead != null">is_read,</if>
+                <if test="relatedEntityType != null">related_entity_type,</if>
+                <if test="relatedEntityId != null">related_entity_id,</if>
+                <if test="createdAt != null">created_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="title != null">#{title},</if>
+                <if test="message != null">#{message},</if>
+                <if test="type != null">#{type},</if>
+                <if test="isRead != null">#{isRead},</if>
+                <if test="relatedEntityType != null">#{relatedEntityType},</if>
+                <if test="relatedEntityId != null">#{relatedEntityId},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.Notifications">
+        update notifications
+        <set>
+                <if test="userId != null">
+                    user_id = #{userId},
+                </if>
+                <if test="title != null">
+                    title = #{title},
+                </if>
+                <if test="message != null">
+                    message = #{message},
+                </if>
+                <if test="type != null">
+                    type = #{type},
+                </if>
+                <if test="isRead != null">
+                    is_read = #{isRead},
+                </if>
+                <if test="relatedEntityType != null">
+                    related_entity_type = #{relatedEntityType},
+                </if>
+                <if test="relatedEntityId != null">
+                    related_entity_id = #{relatedEntityId},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.Notifications">
+        update notifications
+        set 
+            user_id =  #{userId},
+            title =  #{title},
+            message =  #{message},
+            type =  #{type},
+            is_read =  #{isRead},
+            related_entity_type =  #{relatedEntityType},
+            related_entity_id =  #{relatedEntityId},
+            created_at =  #{createdAt}
+        where   id = #{id} 
+    </update>
+</mapper>

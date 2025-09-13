@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.EnrollmentsMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.Enrollments">
+            <id property="id" column="id" />
+            <result property="userId" column="user_id" />
+            <result property="courseId" column="course_id" />
+            <result property="orderItemId" column="order_item_id" />
+            <result property="enrolledAt" column="enrolled_at" />
+            <result property="completedAt" column="completed_at" />
+            <result property="completionPercentage" column="completion_percentage" />
+            <result property="lastAccessedAt" column="last_accessed_at" />
+            <result property="lastLessonId" column="last_lesson_id" />
+            <result property="isActive" column="is_active" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,course_id,order_item_id,enrolled_at,completed_at,
+        completion_percentage,last_accessed_at,last_lesson_id,is_active
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enrollments
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from enrollments
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Enrollments" useGeneratedKeys="true">
+        insert into enrollments
+        ( id,user_id,course_id,order_item_id,enrolled_at,completed_at,
+        completion_percentage,last_accessed_at,last_lesson_id,is_active)
+        values (#{id},#{userId},#{courseId},#{orderItemId},#{enrolledAt},#{completedAt},
+        #{completionPercentage},#{lastAccessedAt},#{lastLessonId},#{isActive})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Enrollments" useGeneratedKeys="true">
+        insert into enrollments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="courseId != null">course_id,</if>
+                <if test="orderItemId != null">order_item_id,</if>
+                <if test="enrolledAt != null">enrolled_at,</if>
+                <if test="completedAt != null">completed_at,</if>
+                <if test="completionPercentage != null">completion_percentage,</if>
+                <if test="lastAccessedAt != null">last_accessed_at,</if>
+                <if test="lastLessonId != null">last_lesson_id,</if>
+                <if test="isActive != null">is_active,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="courseId != null">#{courseId},</if>
+                <if test="orderItemId != null">#{orderItemId},</if>
+                <if test="enrolledAt != null">#{enrolledAt},</if>
+                <if test="completedAt != null">#{completedAt},</if>
+                <if test="completionPercentage != null">#{completionPercentage},</if>
+                <if test="lastAccessedAt != null">#{lastAccessedAt},</if>
+                <if test="lastLessonId != null">#{lastLessonId},</if>
+                <if test="isActive != null">#{isActive},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.Enrollments">
+        update enrollments
+        <set>
+                <if test="userId != null">
+                    user_id = #{userId},
+                </if>
+                <if test="courseId != null">
+                    course_id = #{courseId},
+                </if>
+                <if test="orderItemId != null">
+                    order_item_id = #{orderItemId},
+                </if>
+                <if test="enrolledAt != null">
+                    enrolled_at = #{enrolledAt},
+                </if>
+                <if test="completedAt != null">
+                    completed_at = #{completedAt},
+                </if>
+                <if test="completionPercentage != null">
+                    completion_percentage = #{completionPercentage},
+                </if>
+                <if test="lastAccessedAt != null">
+                    last_accessed_at = #{lastAccessedAt},
+                </if>
+                <if test="lastLessonId != null">
+                    last_lesson_id = #{lastLessonId},
+                </if>
+                <if test="isActive != null">
+                    is_active = #{isActive},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.Enrollments">
+        update enrollments
+        set 
+            user_id =  #{userId},
+            course_id =  #{courseId},
+            order_item_id =  #{orderItemId},
+            enrolled_at =  #{enrolledAt},
+            completed_at =  #{completedAt},
+            completion_percentage =  #{completionPercentage},
+            last_accessed_at =  #{lastAccessedAt},
+            last_lesson_id =  #{lastLessonId},
+            is_active =  #{isActive}
+        where   id = #{id} 
+    </update>
+</mapper>

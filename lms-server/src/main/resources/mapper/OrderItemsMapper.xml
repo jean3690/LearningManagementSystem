@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.OrderItemsMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.OrderItems">
+            <id property="id" column="id" />
+            <result property="orderId" column="order_id" />
+            <result property="courseId" column="course_id" />
+            <result property="unitPrice" column="unit_price" />
+            <result property="discountAmount" column="discount_amount" />
+            <result property="finalPrice" column="final_price" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_id,course_id,unit_price,discount_amount,final_price,
+        created_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_items
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from order_items
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.OrderItems" useGeneratedKeys="true">
+        insert into order_items
+        ( id,order_id,course_id,unit_price,discount_amount,final_price,
+        created_at)
+        values (#{id},#{orderId},#{courseId},#{unitPrice},#{discountAmount},#{finalPrice},
+        #{createdAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.OrderItems" useGeneratedKeys="true">
+        insert into order_items
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="orderId != null">order_id,</if>
+                <if test="courseId != null">course_id,</if>
+                <if test="unitPrice != null">unit_price,</if>
+                <if test="discountAmount != null">discount_amount,</if>
+                <if test="finalPrice != null">final_price,</if>
+                <if test="createdAt != null">created_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="orderId != null">#{orderId},</if>
+                <if test="courseId != null">#{courseId},</if>
+                <if test="unitPrice != null">#{unitPrice},</if>
+                <if test="discountAmount != null">#{discountAmount},</if>
+                <if test="finalPrice != null">#{finalPrice},</if>
+                <if test="createdAt != null">#{createdAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.OrderItems">
+        update order_items
+        <set>
+                <if test="orderId != null">
+                    order_id = #{orderId},
+                </if>
+                <if test="courseId != null">
+                    course_id = #{courseId},
+                </if>
+                <if test="unitPrice != null">
+                    unit_price = #{unitPrice},
+                </if>
+                <if test="discountAmount != null">
+                    discount_amount = #{discountAmount},
+                </if>
+                <if test="finalPrice != null">
+                    final_price = #{finalPrice},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.OrderItems">
+        update order_items
+        set 
+            order_id =  #{orderId},
+            course_id =  #{courseId},
+            unit_price =  #{unitPrice},
+            discount_amount =  #{discountAmount},
+            final_price =  #{finalPrice},
+            created_at =  #{createdAt}
+        where   id = #{id} 
+    </update>
+</mapper>

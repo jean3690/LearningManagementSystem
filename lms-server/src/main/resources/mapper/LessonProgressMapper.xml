@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lms.mapper.LessonProgressMapper">
+
+    <resultMap id="BaseResultMap" type="org.lms.entity.LessonProgress">
+            <id property="id" column="id" />
+            <result property="enrollmentId" column="enrollment_id" />
+            <result property="lessonId" column="lesson_id" />
+            <result property="status" column="status" />
+            <result property="progressPercentage" column="progress_percentage" />
+            <result property="lastPosition" column="last_position" />
+            <result property="startedAt" column="started_at" />
+            <result property="completedAt" column="completed_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,enrollment_id,lesson_id,status,progress_percentage,last_position,
+        started_at,completed_at,updated_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lesson_progress
+        where  id = #{id} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from lesson_progress
+        where  id = #{id} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.LessonProgress" useGeneratedKeys="true">
+        insert into lesson_progress
+        ( id,enrollment_id,lesson_id,status,progress_percentage,last_position,
+        started_at,completed_at,updated_at)
+        values (#{id},#{enrollmentId},#{lessonId},#{status},#{progressPercentage},#{lastPosition},
+        #{startedAt},#{completedAt},#{updatedAt})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.LessonProgress" useGeneratedKeys="true">
+        insert into lesson_progress
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="enrollmentId != null">enrollment_id,</if>
+                <if test="lessonId != null">lesson_id,</if>
+                <if test="status != null">status,</if>
+                <if test="progressPercentage != null">progress_percentage,</if>
+                <if test="lastPosition != null">last_position,</if>
+                <if test="startedAt != null">started_at,</if>
+                <if test="completedAt != null">completed_at,</if>
+                <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="enrollmentId != null">#{enrollmentId},</if>
+                <if test="lessonId != null">#{lessonId},</if>
+                <if test="status != null">#{status},</if>
+                <if test="progressPercentage != null">#{progressPercentage},</if>
+                <if test="lastPosition != null">#{lastPosition},</if>
+                <if test="startedAt != null">#{startedAt},</if>
+                <if test="completedAt != null">#{completedAt},</if>
+                <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.lms.entity.LessonProgress">
+        update lesson_progress
+        <set>
+                <if test="enrollmentId != null">
+                    enrollment_id = #{enrollmentId},
+                </if>
+                <if test="lessonId != null">
+                    lesson_id = #{lessonId},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="progressPercentage != null">
+                    progress_percentage = #{progressPercentage},
+                </if>
+                <if test="lastPosition != null">
+                    last_position = #{lastPosition},
+                </if>
+                <if test="startedAt != null">
+                    started_at = #{startedAt},
+                </if>
+                <if test="completedAt != null">
+                    completed_at = #{completedAt},
+                </if>
+                <if test="updatedAt != null">
+                    updated_at = #{updatedAt},
+                </if>
+        </set>
+        where   id = #{id} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.lms.entity.LessonProgress">
+        update lesson_progress
+        set 
+            enrollment_id =  #{enrollmentId},
+            lesson_id =  #{lessonId},
+            status =  #{status},
+            progress_percentage =  #{progressPercentage},
+            last_position =  #{lastPosition},
+            started_at =  #{startedAt},
+            completed_at =  #{completedAt},
+            updated_at =  #{updatedAt}
+        where   id = #{id} 
+    </update>
+</mapper>
