@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 课程课时内容表
  * @TableName lessons
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Lessons {
     /**
      * 课时ID

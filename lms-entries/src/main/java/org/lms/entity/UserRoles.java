@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 系统角色定义表
  * @TableName user_roles
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRoles {
     /**
      * 角色唯一标识ID

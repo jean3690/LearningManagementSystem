@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户与角色关联表
  * @TableName user_role_mappings
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRoleMappings {
     /**
      * 映射关系ID

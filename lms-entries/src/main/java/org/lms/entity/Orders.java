@@ -2,13 +2,18 @@ package org.lms.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 订单表
  * @TableName orders
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Orders {
     /**
      * 订单ID

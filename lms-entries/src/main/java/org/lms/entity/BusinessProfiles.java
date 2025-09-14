@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 企业用户详细信息表
  * @TableName business_profiles
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BusinessProfiles {
     /**
      * 企业资料ID

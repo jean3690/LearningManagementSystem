@@ -2,13 +2,18 @@ package org.lms.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 课程报名表
  * @TableName enrollments
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Enrollments {
     /**
      * 报名ID

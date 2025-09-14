@@ -2,13 +2,18 @@ package org.lms.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 优惠券表
  * @TableName coupons
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Coupons {
     /**
      * 优惠券ID

@@ -2,13 +2,18 @@ package org.lms.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 发票表
  * @TableName invoices
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Invoices {
     /**
      * 发票ID

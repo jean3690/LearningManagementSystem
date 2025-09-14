@@ -2,6 +2,9 @@ package org.lms.mapper;
 
 
 import org.lms.entity.UserRoles;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,5 @@ public interface UserRolesMapper {
 
     int updateByPrimaryKey(UserRoles record);
 
+    List<UserRoles> findListById(Integer roleId);
 }

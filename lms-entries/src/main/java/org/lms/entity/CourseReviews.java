@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 课程评价表
  * @TableName course_reviews
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseReviews {
     /**
      * 评价ID

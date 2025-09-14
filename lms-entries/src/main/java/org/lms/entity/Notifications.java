@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 系统通知表
  * @TableName notifications
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Notifications {
     /**
      * 通知ID

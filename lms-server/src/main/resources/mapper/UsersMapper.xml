@@ -9,8 +9,7 @@
             <result property="uuid" column="uuid" />
             <result property="email" column="email" />
             <result property="password" column="password" />
-            <result property="firstName" column="first_name" />
-            <result property="lastName" column="last_name" />
+            <result property="username" column="username" />
             <result property="avatarUrl" column="avatar_url" />
             <result property="phone" column="phone" />
             <result property="userType" column="user_type" />
@@ -23,7 +22,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,uuid,email,password,first_name,last_name,
+        id,uuid,email,password,username,
         avatar_url,phone,user_type,account_type,email_verified,
         is_active,last_login_at,created_at,updated_at
     </sql>
@@ -34,6 +33,9 @@
         from users
         where  id = #{id} 
     </select>
+    <select id="findByUsername" resultMap="BaseResultMap">
+        select * from users where username = #{username}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from users
@@ -41,10 +43,10 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Users" useGeneratedKeys="true">
         insert into users
-        ( id,uuid,email,password,first_name,last_name,
+        ( id,uuid,email,password,username,
         avatar_url,phone,user_type,account_type,email_verified,
         is_active,last_login_at,created_at,updated_at)
-        values (#{id},#{uuid},#{email},#{password},#{firstName},#{lastName},
+        values (#{id},#{uuid},#{email},#{password},#{username},
         #{avatarUrl},#{phone},#{userType},#{accountType},#{emailVerified},
         #{isActive},#{lastLoginAt},#{createdAt},#{updatedAt})
     </insert>
@@ -55,8 +57,7 @@
                 <if test="uuid != null">uuid,</if>
                 <if test="email != null">email,</if>
                 <if test="password != null">password,</if>
-                <if test="firstName != null">first_name,</if>
-                <if test="lastName != null">last_name,</if>
+                <if test="username != null">username,</if>
                 <if test="avatarUrl != null">avatar_url,</if>
                 <if test="phone != null">phone,</if>
                 <if test="userType != null">user_type,</if>
@@ -72,8 +73,7 @@
                 <if test="uuid != null">#{uuid},</if>
                 <if test="email != null">#{email},</if>
                 <if test="password != null">#{password},</if>
-                <if test="firstName != null">#{firstName},</if>
-                <if test="lastName != null">#{lastName},</if>
+                <if test="username != null">#{username},</if>
                 <if test="avatarUrl != null">#{avatarUrl},</if>
                 <if test="phone != null">#{phone},</if>
                 <if test="userType != null">#{userType},</if>
@@ -97,11 +97,8 @@
                 <if test="password != null">
                     password = #{password},
                 </if>
-                <if test="firstName != null">
-                    first_name = #{firstName},
-                </if>
-                <if test="lastName != null">
-                    last_name = #{lastName},
+                <if test="username != null">
+                    username = #{username},
                 </if>
                 <if test="avatarUrl != null">
                     avatar_url = #{avatarUrl},
@@ -139,8 +136,7 @@
             uuid =  #{uuid},
             email =  #{email},
             password =  #{password},
-            first_name =  #{firstName},
-            last_name =  #{lastName},
+            username =  #{username},
             avatar_url =  #{avatarUrl},
             phone =  #{phone},
             user_type =  #{userType},

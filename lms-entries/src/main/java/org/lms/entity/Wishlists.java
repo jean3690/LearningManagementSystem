@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户课程收藏表
  * @TableName wishlists
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Wishlists {
     /**
      * 收藏ID

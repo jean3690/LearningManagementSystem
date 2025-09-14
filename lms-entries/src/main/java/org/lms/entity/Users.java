@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户基本信息表
  * @TableName users
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users {
     /**
      * 用户唯一标识ID
@@ -32,12 +37,7 @@ public class Users {
     /**
      * 用户名字
      */
-    private String firstName;
-
-    /**
-     * 用户姓氏
-     */
-    private String lastName;
+    private String username;
 
     /**
      * 用户头像URL地址
@@ -100,8 +100,7 @@ public class Users {
             && (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getFirstName() == null ? other.getFirstName() == null : this.getFirstName().equals(other.getFirstName()))
-            && (this.getLastName() == null ? other.getLastName() == null : this.getLastName().equals(other.getLastName()))
+            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getAvatarUrl() == null ? other.getAvatarUrl() == null : this.getAvatarUrl().equals(other.getAvatarUrl()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getUserType() == null ? other.getUserType() == null : this.getUserType().equals(other.getUserType()))
@@ -121,8 +120,7 @@ public class Users {
         result = prime * result + ((getUuid() == null) ? 0 : getUuid().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getFirstName() == null) ? 0 : getFirstName().hashCode());
-        result = prime * result + ((getLastName() == null) ? 0 : getLastName().hashCode());
+        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
         result = prime * result + ((getAvatarUrl() == null) ? 0 : getAvatarUrl().hashCode());
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getUserType() == null) ? 0 : getUserType().hashCode());
@@ -145,8 +143,7 @@ public class Users {
         sb.append(", uuid=").append(uuid);
         sb.append(", email=").append(email);
         sb.append(", password=").append(password);
-        sb.append(", firstName=").append(firstName);
-        sb.append(", lastName=").append(lastName);
+        sb.append(", username=").append(username);
         sb.append(", avatarUrl=").append(avatarUrl);
         sb.append(", phone=").append(phone);
         sb.append(", userType=").append(userType);

@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 课时学习进度表
  * @TableName lesson_progress
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LessonProgress {
     /**
      * 进度ID

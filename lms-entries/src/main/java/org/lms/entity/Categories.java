@@ -1,13 +1,18 @@
 package org.lms.entity;
 
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 课程分类表
  * @TableName categories
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Categories {
     /**
      * 分类ID
