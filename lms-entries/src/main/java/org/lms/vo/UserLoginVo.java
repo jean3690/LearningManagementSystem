@@ -1,14 +1,13 @@
-package org.lms.dto;
+package org.lms.vo;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UsersDto {
+@AllArgsConstructor
+public class UserLoginVo {
     /**
      * 用户唯一标识ID
      */
@@ -43,5 +42,10 @@ public class UsersDto {
      * 用户手机号码
      */
     private String phone;
+
+    /**
+     * 用户类型：个人用户/企业用户
+     */
+    private Object userType;
     private String token;
 }

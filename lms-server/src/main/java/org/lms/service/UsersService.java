@@ -1,6 +1,8 @@
 package org.lms.service;
 
 
+import org.lms.dto.UsersDto;
+import org.lms.response.Result;
 
 /**
 * @author jeang
@@ -9,4 +11,5 @@ package org.lms.service;
 */
 public interface UsersService  {
 
+    Result login(UsersDto usersDto);
 }

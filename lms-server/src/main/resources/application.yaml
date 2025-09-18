@@ -3,6 +3,19 @@ spring:
     name: lmsServerApplication
   profiles:
     active: dev
+  data:
+    redis:
+      host: 192.168.138.133
+      port: 6379
+      database: 0
+      password: ningzaichun
+      timeout: 10s
+      lettuce:
+        pool:
+          max-wait: -1ms
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
   datasource:
     type: ${datasource.type}
     driver-class-name: ${datasource.driver-class-name}
@@ -82,9 +95,14 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'default'
+    - group: '后台管理Api'
       paths-to-match: '/**'
-      packages-to-scan: com.xiaominfo.knife4j.demo.web
+      packages-to-scan: org.lms.controller.admin
+    - group: '用户Api'
+      paths-to-match:
+        - '/**'
+      packages-to-scan: org.lms.controller.user
+        -
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: true
