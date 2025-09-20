@@ -1,5 +1,6 @@
 package org.lms.config;
 
+import org.lms.security.Filter.CustomAfterFilter;
 import org.lms.security.Filter.JwtAuthorizeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
     private JwtAuthorizeFilter jwtAuthorizeFilter;
+    private CustomAfterFilter customAfterFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -39,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->{
                     auth.requestMatchers("/**").permitAll()
                             .anyRequest().authenticated();
-                }).addFilterBefore(jwtAuthorizeFilter, UsernamePasswordAuthenticationFilter.class).build();
+                }).addFilterBefore(jwtAuthorizeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(customAfterFilter,UsernamePasswordAuthenticationFilter.class).build();
     }
 }

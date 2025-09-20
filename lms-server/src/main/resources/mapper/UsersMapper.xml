@@ -36,10 +36,25 @@
     <select id="findByUsername" resultMap="BaseResultMap">
         select * from users where username = #{username}
     </select>
+    <select id="queryAll" resultType="org.lms.entity.Users">
+        SELECT * FROM users;
+    </select>
+    <select id="queryList" resultType="org.lms.entity.Users">
+        SELECT * FROM users WHERE id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from users
         where  id = #{id} 
+    </delete>
+    <delete id="removeByList">
+        delete from users WHERE id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Users" useGeneratedKeys="true">
         insert into users

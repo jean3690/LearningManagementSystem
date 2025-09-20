@@ -1,5 +1,6 @@
 package org.lms.entity;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class Wishlists {
     /**
      * 收藏时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object that) {

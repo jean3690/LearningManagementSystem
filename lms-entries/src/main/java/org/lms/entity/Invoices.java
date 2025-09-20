@@ -1,6 +1,7 @@
 package org.lms.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -38,12 +39,12 @@ public class Invoices {
     /**
      * 开票日期
      */
-    private Date issueDate;
+    private Instant issueDate;
 
     /**
      * 到期日期
      */
-    private Date dueDate;
+    private Instant dueDate;
 
     /**
      * 发票金额
@@ -68,17 +69,17 @@ public class Invoices {
     /**
      * 支付日期
      */
-    private Date paymentDate;
+    private Instant paymentDate;
 
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     /**
      * 最后更新时间
      */
-    private Date updatedAt;
+    private Instant updatedAt;
 
     @Override
     public boolean equals(Object that) {

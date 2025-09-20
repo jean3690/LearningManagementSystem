@@ -1,6 +1,7 @@
 package org.lms.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -63,12 +64,12 @@ public class Coupons {
     /**
      * 有效期开始时间
      */
-    private Date validFrom;
+    private Instant validFrom;
 
     /**
      * 有效期结束时间
      */
-    private Date validUntil;
+    private Instant validUntil;
 
     /**
      * 是否有效
@@ -78,7 +79,7 @@ public class Coupons {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object that) {

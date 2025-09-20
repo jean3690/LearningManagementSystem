@@ -1,5 +1,6 @@
 package org.lms.entity;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -57,7 +58,7 @@ public class Notifications {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object that) {

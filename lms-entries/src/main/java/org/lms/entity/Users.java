@@ -1,8 +1,10 @@
 package org.lms.entity;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Users {
     /**
      * 用户唯一标识ID
@@ -72,17 +75,17 @@ public class Users {
     /**
      * 最后登录时间
      */
-    private Date lastLoginAt;
+    private Instant lastLoginAt;
 
     /**
      * 账户创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     /**
      * 最后更新时间
      */
-    private Date updatedAt;
+    private Instant updatedAt;
 
     @Override
     public boolean equals(Object that) {

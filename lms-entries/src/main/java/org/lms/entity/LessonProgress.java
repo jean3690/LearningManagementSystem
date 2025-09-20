@@ -1,5 +1,6 @@
 package org.lms.entity;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -47,17 +48,17 @@ public class LessonProgress {
     /**
      * 开始学习时间
      */
-    private Date startedAt;
+    private Instant startedAt;
 
     /**
      * 完成学习时间
      */
-    private Date completedAt;
+    private Instant completedAt;
 
     /**
      * 最后更新时间
      */
-    private Date updatedAt;
+    private Instant updatedAt;
 
     @Override
     public boolean equals(Object that) {

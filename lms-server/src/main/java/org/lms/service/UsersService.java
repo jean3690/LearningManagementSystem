@@ -2,7 +2,10 @@ package org.lms.service;
 
 
 import org.lms.dto.UsersDto;
+import org.lms.dto.UsersUpdateDto;
 import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -12,4 +15,18 @@ import org.lms.response.Result;
 public interface UsersService  {
 
     Result login(UsersDto usersDto);
+
+    Result addUser(UsersDto usersDto);
+
+    Result updateUser(UsersUpdateDto updateDto);
+
+    Result logout(String token);
+
+    Result pageQuery(Integer pageNum, Integer pageSize);
+
+    Result queryById(Long id);
+
+    Result list(List<Long> ids);
+
+    Result remove(List<Long> ids);
 }

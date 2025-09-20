@@ -1,6 +1,7 @@
 package org.lms.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -48,7 +49,7 @@ public class OrderItems {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object that) {

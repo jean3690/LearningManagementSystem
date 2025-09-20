@@ -1,6 +1,7 @@
 package org.lms.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -38,12 +39,12 @@ public class Enrollments {
     /**
      * 报名时间
      */
-    private Date enrolledAt;
+    private Instant enrolledAt;
 
     /**
      * 完成时间
      */
-    private Date completedAt;
+    private Instant completedAt;
 
     /**
      * 完成百分比
@@ -53,7 +54,7 @@ public class Enrollments {
     /**
      * 最后访问时间
      */
-    private Date lastAccessedAt;
+    private Instant lastAccessedAt;
 
     /**
      * 最后学习的课时ID

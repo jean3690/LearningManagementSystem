@@ -1,14 +1,13 @@
 package org.lms.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UsersDto {
+@AllArgsConstructor
+public class UsersUpdateDto {
     /**
      * 用户唯一标识ID
      */
@@ -35,8 +34,33 @@ public class UsersDto {
     private String username;
 
     /**
+     * 用户头像URL地址
+     */
+    private String avatarUrl;
+
+    /**
      * 用户手机号码
      */
     private String phone;
-    private String token;
+
+    /**
+     * 用户类型：个人用户/企业用户
+     */
+    private Object userType;
+
+    /**
+     * 账户类型：免费/基础/高级/企业
+     */
+    private Object accountType;
+
+    /**
+     * 邮箱是否已验证
+     */
+    private Integer emailVerified;
+
+    /**
+     * 账户是否激活
+     */
+    private Integer isActive;
+
 }

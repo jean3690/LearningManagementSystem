@@ -1,5 +1,6 @@
 package org.lms.entity;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -42,12 +43,12 @@ public class CourseModules {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     /**
      * 最后更新时间
      */
-    private Date updatedAt;
+    private Instant updatedAt;
 
     @Override
     public boolean equals(Object that) {

@@ -1,6 +1,7 @@
 package org.lms.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -83,7 +84,7 @@ public class Courses {
     /**
      * 审核通过日期
      */
-    private Date approvalDate;
+    private Instant approvalDate;
 
     /**
      * 课程平均评分
@@ -138,7 +139,7 @@ public class Courses {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object that) {

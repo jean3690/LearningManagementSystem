@@ -6,11 +6,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.lms.Context.UserContextHolder;
 import org.lms.constant.RedisConstant;
+import org.lms.dto.UsersDto;
 import org.lms.entity.Users;
 import org.lms.mapper.UsersMapper;
 import org.lms.security.UserDetailsImpl;
 import org.lms.utils.JwtUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,21 +58,23 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
             return;
         }
         String redisKey = RedisConstant.API_TOKEN +token;
-        UserDetailsImpl userDetails = (UserDetailsImpl) redisTemplate.opsForValue().get(redisKey);
-        if(userDetails==null){
+        Long id  = (Long) redisTemplate.opsForValue().get(redisKey);
+        if(id==null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("User not logged in");
             return;
         }
-        CompletableFuture.runAsync(()->{
-            try {
-                redisTemplate.expire(redisKey,30,TimeUnit.MINUTES);
-            }catch (Exception e){
-                log.error("续期失败");
-            }
-        },executorService);
-        Users users = userDetails.getUsers();
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, null);
+        Long ttl = redisTemplate.getExpire(redisKey, TimeUnit.MINUTES);
+        if(ttl!=null && ttl <15){
+            redisTemplate.expire(redisKey,30,TimeUnit.MINUTES);
+        }
+
+        Users users = usersMapper.selectByPrimaryKey(id);
+        UsersDto usersDto = new UsersDto();
+        usersDto.setToken(token);
+        BeanUtils.copyProperties(users,usersDto);
+        UserContextHolder.set(usersDto);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(new UserDetailsImpl(users), null, null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request,response);
     }
