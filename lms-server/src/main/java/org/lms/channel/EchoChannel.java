@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint(value = "/channel/echo",configurator = GetHttpSessionConfig.class)
 @Slf4j
-@Component
 @CrossOrigin(origins = "*")
 public class EchoChannel {
     private static final Map<String, Session> group = new ConcurrentHashMap<>();
@@ -29,16 +28,18 @@ public class EchoChannel {
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig endpointConfig){
+        this.session = session;
         this.sessionKey = (String) endpointConfig.getUserProperties().get("Connected");
         group.put(sessionKey,session);
         log.info("websocket建立成功");
     }
     @OnClose
-    public void onClose(CloseReason closeReason,EndpointConfig endpointConfig){
-         String key = (String) endpointConfig.getUserProperties().get("Connected");
+    public void onClose(CloseReason closeReason){
+         String key = this.sessionKey;
          if(key!=null){
              group.remove(key);
          }
+         log.info("websocket关闭连接");
     }
     @OnError
     public void onError(Throwable throwable) throws IOException {

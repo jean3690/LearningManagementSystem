@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("adminOrdersController")
-@RequestMapping("/admin/orders")
+@RestController("adminLessonController")
+@RequestMapping("/admin/lesson")
 @Slf4j
-@Tag(name = "订单管理")
-public class OrdersController {
+@Tag(name = "课程课时内容管理")
+public class LessonController {
 }

@@ -25,6 +25,20 @@
         from categories
         where  id = #{id} 
     </select>
+    <select id="list" resultType="org.lms.entity.Categories">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from categories
+        WHERE id in
+        <foreach collection="ids" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectByPage" resultType="org.lms.entity.Categories">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from categories
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from categories
@@ -32,9 +46,9 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Categories" useGeneratedKeys="true">
         insert into categories
-        ( id,name,description,parent_id,sort_order,is_active,
+        ( name,description,parent_id,sort_order,is_active,
         created_at)
-        values (#{id},#{name},#{description},#{parentId},#{sortOrder},#{isActive},
+        values (#{name},#{description},#{parentId},#{sortOrder},#{isActive},
         #{createdAt})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Categories" useGeneratedKeys="true">

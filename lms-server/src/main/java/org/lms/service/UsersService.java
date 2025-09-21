@@ -1,6 +1,7 @@
 package org.lms.service;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.lms.dto.UsersDto;
 import org.lms.dto.UsersUpdateDto;
 import org.lms.response.Result;
@@ -14,7 +15,7 @@ import java.util.List;
 */
 public interface UsersService  {
 
-    Result login(UsersDto usersDto);
+    Result login(UsersDto usersDto, HttpSession httpSession);
 
     Result addUser(UsersDto usersDto);
 

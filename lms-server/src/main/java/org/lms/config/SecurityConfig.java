@@ -25,6 +25,11 @@ public class SecurityConfig {
     private JwtAuthorizeFilter jwtAuthorizeFilter;
     private CustomAfterFilter customAfterFilter;
 
+    public SecurityConfig(JwtAuthorizeFilter jwtAuthorizeFilter, CustomAfterFilter customAfterFilter) {
+        this.jwtAuthorizeFilter = jwtAuthorizeFilter;
+        this.customAfterFilter = customAfterFilter;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

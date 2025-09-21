@@ -1,7 +1,12 @@
 package org.lms.mapper;
 
 
+import org.lms.Enum.OpreationType;
+import org.lms.annotation.AutoFill;
 import org.lms.entity.Categories;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @author jeang
@@ -14,7 +19,7 @@ public interface CategoriesMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Categories record);
-
+    @AutoFill(value = {OpreationType.CREATEDAT})
     int insertSelective(Categories record);
 
     Categories selectByPrimaryKey(Long id);
@@ -23,4 +28,7 @@ public interface CategoriesMapper {
 
     int updateByPrimaryKey(Categories record);
 
+    ArrayList<Categories> list(List<Long> ids);
+
+    List<Categories> selectByPage();
 }

@@ -18,7 +18,7 @@ public interface UsersMapper {
     int deleteByPrimaryKey(Long id);
     @AutoFill(value = {OpreationType.CREATEDAT,OpreationType.UPDATEDAT})
     int insert(Users record);
-
+    @AutoFill(value = {OpreationType.CREATEDAT,OpreationType.UPDATEDAT})
     int insertSelective(Users record);
 
     Users selectByPrimaryKey(Long id);

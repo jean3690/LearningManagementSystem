@@ -3,6 +3,7 @@ package org.lms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import jakarta.servlet.http.HttpSession;
 import org.lms.Enum.AccountType;
 import org.lms.Enum.UserType;
 import org.lms.constant.RedisConstant;
@@ -11,7 +12,6 @@ import org.lms.dto.UsersUpdateDto;
 import org.lms.entity.Users;
 import org.lms.mapper.UsersMapper;
 import org.lms.response.Result;
-import org.lms.security.UserDetailsImpl;
 import org.lms.service.UsersService;
 import org.lms.utils.JwtUtil;
 import org.lms.vo.UserLoginVo;
@@ -19,12 +19,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -35,16 +35,16 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-    private UsersMapper usersMapper;
-    private RedisTemplate<String,Object> redisTemplate;
+    private final UsersMapper usersMapper;
+    private final RedisTemplate<String,Object> redisTemplate;
 
-    public UsersServiceImpl(UsersMapper usersMapper, RedisTemplate redisTemplate) {
+    public UsersServiceImpl(UsersMapper usersMapper, RedisTemplate<String,Object> redisTemplate,TransactionTemplate transactionTemplate) {
         this.usersMapper = usersMapper;
         this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public Result login(UsersDto usersDto) {
+    public Result login(UsersDto usersDto, HttpSession httpSession) {
         String username = usersDto.getUsername();
         if(!StringUtils.hasText(username)){
             throw new RuntimeException("没有用户名");
@@ -67,6 +67,7 @@ public class UsersServiceImpl implements UsersService {
         String token = JwtUtil.createJWT(u.getId().toString());
         userLoginVo.setToken(token);
         redisTemplate.opsForValue().set(RedisConstant.API_TOKEN+token,u.getId(),30, TimeUnit.MINUTES);
+        httpSession.setAttribute("token",token);
         return Result.success(userLoginVo);
     }
 
@@ -91,7 +92,7 @@ public class UsersServiceImpl implements UsersService {
                 .build();
         BeanUtils.copyProperties(usersDto,users);
         users.setPassword(new BCryptPasswordEncoder().encode(usersDto.getPassword()));
-        int insert = usersMapper.insert(users);
+        int insert = usersMapper.insertSelective(users);
         if(insert<0){
             return Result.error("添加失败");
         }
@@ -102,7 +103,7 @@ public class UsersServiceImpl implements UsersService {
     public Result updateUser(UsersUpdateDto updateDto) {
         Users users = new Users();
         BeanUtils.copyProperties(updateDto,users);
-        int update = usersMapper.updateByPrimaryKey(users);
+        int update = usersMapper.updateByPrimaryKeySelective(users);
         if(update<0){
             return Result.error("修改失败");
         }

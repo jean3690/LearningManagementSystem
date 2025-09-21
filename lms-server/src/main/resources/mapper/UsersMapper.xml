@@ -58,17 +58,16 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Users" useGeneratedKeys="true">
         insert into users
-        ( id,uuid,email,password,username,
+        ( uuid,email,password,username,
         avatar_url,phone,user_type,account_type,email_verified,
         is_active,last_login_at,created_at,updated_at)
-        values (#{id},#{uuid},#{email},#{password},#{username},
+        values (#{uuid},#{email},#{password},#{username},
         #{avatarUrl},#{phone},#{userType},#{accountType},#{emailVerified},
         #{isActive},#{lastLoginAt},#{createdAt},#{updatedAt})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Users" useGeneratedKeys="true">
         insert into users
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="id != null">id,</if>
                 <if test="uuid != null">uuid,</if>
                 <if test="email != null">email,</if>
                 <if test="password != null">password,</if>
@@ -84,7 +83,6 @@
                 <if test="updatedAt != null">updated_at,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="id != null">#{id},</if>
                 <if test="uuid != null">#{uuid},</if>
                 <if test="email != null">#{email},</if>
                 <if test="password != null">#{password},</if>

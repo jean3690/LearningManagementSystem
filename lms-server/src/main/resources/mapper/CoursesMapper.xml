@@ -46,6 +46,10 @@
         from courses
         where  id = #{id} 
     </select>
+    <select id="findByCategoryId" resultType="org.lms.entity.Courses">
+        SELECT * FROM courses
+        WHERE category_id = #{categoryId}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from courses

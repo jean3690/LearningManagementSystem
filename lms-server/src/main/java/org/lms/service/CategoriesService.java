@@ -1,7 +1,12 @@
 package org.lms.service;
 
 
+import org.lms.dto.CategoriesDto;
 import org.lms.entity.Categories;
+import org.lms.response.Result;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @author jeang
@@ -10,4 +15,15 @@ import org.lms.entity.Categories;
 */
 public interface CategoriesService  {
 
+    Result queryById(Long id);
+
+    Result add(CategoriesDto categoriesDto);
+
+    void update(CategoriesDto categoriesDto);
+
+    Result delete(Long id);
+
+    ArrayList<Categories> list(List<Long> ids);
+
+    Result pageQuery(Integer pageNum, Integer pageSize);
 }

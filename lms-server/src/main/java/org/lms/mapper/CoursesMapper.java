@@ -1,6 +1,7 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.entity.Courses;
 
 /**
@@ -23,4 +24,5 @@ public interface CoursesMapper {
 
     int updateByPrimaryKey(Courses record);
 
+    Courses findByCategoryId(@Param("categoryId") Long id);
 }
