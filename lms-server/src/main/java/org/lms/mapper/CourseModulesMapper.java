@@ -1,6 +1,12 @@
 package org.lms.mapper;
 
+import org.apache.ibatis.annotations.Param;
+import org.lms.Enum.OpreationType;
+import org.lms.annotation.AutoFill;
+import org.lms.dto.CourseModulesDto;
 import org.lms.entity.CourseModules;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -13,7 +19,7 @@ public interface CourseModulesMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(CourseModules record);
-
+    @AutoFill({OpreationType.CREATEDAT,OpreationType.UPDATEDAT})
     int insertSelective(CourseModules record);
 
     CourseModules selectByPrimaryKey(Long id);
@@ -22,4 +28,11 @@ public interface CourseModulesMapper {
 
     int updateByPrimaryKey(CourseModules record);
 
+    List<CourseModules> list(@Param("ids") List<Long> list);
+
+    List<CourseModules> findAll();
+
+    List<CourseModules> search(CourseModulesDto courseModulesDto);
+
+    int deleteBatch(List<Long> ids);
 }

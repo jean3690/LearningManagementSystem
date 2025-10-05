@@ -3,6 +3,7 @@ package org.lms.entity;
 import java.time.Instant;
 import java.util.Date;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "收藏")
 public class Wishlists {
     /**
      * 收藏ID

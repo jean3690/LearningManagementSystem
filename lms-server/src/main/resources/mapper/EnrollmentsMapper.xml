@@ -28,10 +28,69 @@
         from enrollments
         where  id = #{id} 
     </select>
+    <select id="list" resultType="org.lms.entity.Enrollments">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from enrollments
+        <where>
+            course_id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <select id="findAll" resultType="org.lms.entity.Enrollments">
+        select
+        <include refid="Base_Column_List"></include>
+        from enrollments
+    </select>
+    <select id="search" resultType="org.lms.entity.Enrollments">
+        select
+        <include refid="Base_Column_List"></include>
+        from enrollments
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="courseId != null">
+                and course_id = #{courseId}
+            </if>
+            <if test="orderItemId != null">
+                and order_item_id = #{orderItemId}
+            </if>
+            <if test="enrolledAt != null">
+                and enrolled_at = #{enrolledAt}
+            </if>
+            <if test="completedAt != null">
+                and completed_at = #{completedAt}
+            </if>
+            <if test="completionPercentage != null">
+                and completion_percentage = #{completionPercentage}
+            </if>
+            <if test="lastAccessedAt != null">
+                and last_accessed_at = #{lastAccessedAt}
+            </if>
+            <if test="lastLessonId != null">
+                and last_lesson_id = #{lastLessonId}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from enrollments
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        delete from enrollments
+        <where>
+            id in
+            <foreach collection="ids" separator="," open="(" close=")" item="id">
+                #{id}
+            </foreach>
+        </where>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Enrollments" useGeneratedKeys="true">
         insert into enrollments

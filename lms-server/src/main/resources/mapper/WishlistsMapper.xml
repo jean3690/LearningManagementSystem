@@ -21,10 +21,45 @@
         from wishlists
         where  id = #{id} 
     </select>
+    <select id="list" resultType="org.lms.entity.Wishlists">
+        select
+        <include refid="Base_Column_List"></include>
+        from wishlists
+        <where>
+            id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <select id="findAll" resultType="org.lms.entity.Wishlists">
+        select
+        <include refid="Base_Column_List"></include>
+        from wishlists
+    </select>
+    <select id="searchByCreatedAt" resultType="org.lms.entity.Wishlists">
+        select
+        <include refid="Base_Column_List"></include>
+        from wishlists
+        <where>
+            <if test="createdAt!=null">
+                created_at &lt;#{createdAt}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from wishlists
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        delete from wishlists
+        <where>
+            id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Wishlists" useGeneratedKeys="true">
         insert into wishlists

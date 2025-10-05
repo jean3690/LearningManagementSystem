@@ -1,7 +1,10 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.entity.Enrollments;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,11 @@ public interface EnrollmentsMapper {
 
     int updateByPrimaryKey(Enrollments record);
 
+    List<Enrollments> list(@Param("ids") List<Long> list);
+
+    List<Enrollments> findAll();
+
+    List<Enrollments> search(Enrollments enrollments);
+
+    int deleteBatch(List<Long> ids);
 }

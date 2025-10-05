@@ -25,10 +25,61 @@
         from course_modules
         where  id = #{id} 
     </select>
+    <select id="list" resultType="org.lms.entity.CourseModules">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from course_modules
+        <where>
+            course_id in
+            <foreach collection="ids" item="," open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <select id="findAll" resultType="org.lms.entity.CourseModules">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM course_modules
+        order by sort_order asc
+    </select>
+    <select id="search" resultType="org.lms.entity.CourseModules">
+        select
+        <include refid="Base_Column_List"></include>
+        from course_modules
+        <where>
+            <if test="courseId != null">
+                course_id = #{courseId}
+            </if>
+            <if test="title != null">
+                and title = #{title}
+            </if>
+            <if test="description != null">
+                and description = #{description}
+            </if>
+            <if test="sortOrder != null">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from course_modules
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        delete from course_modules
+        <where>
+            id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.CourseModules" useGeneratedKeys="true">
         insert into course_modules

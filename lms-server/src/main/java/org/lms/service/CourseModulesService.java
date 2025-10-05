@@ -1,7 +1,11 @@
 package org.lms.service;
 
 
+import org.lms.dto.CourseModulesDto;
 import org.lms.entity.CourseModules;
+import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -10,4 +14,11 @@ import org.lms.entity.CourseModules;
 */
 public interface CourseModulesService {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result search(CourseModulesDto courseModulesDto);
+
+    Result add(CourseModulesDto courseModulesDto);
+
+    Result delete(List<Long> ids);
 }

@@ -1,7 +1,10 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.entity.Lessons;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,5 @@ public interface LessonsMapper {
 
     int updateByPrimaryKey(Lessons record);
 
+    List<Lessons> list(@Param("ids") List<Long> ids);
 }

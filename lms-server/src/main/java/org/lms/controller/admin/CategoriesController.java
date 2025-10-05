@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "分类管理接口")
 public class CategoriesController {
-    private CategoriesService categoriesService;
+    private final CategoriesService categoriesService;
 
     public CategoriesController(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;

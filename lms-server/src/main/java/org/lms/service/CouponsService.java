@@ -1,7 +1,11 @@
 package org.lms.service;
 
 
+import org.lms.dto.CouponsDto;
 import org.lms.entity.Coupons;
+import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -10,4 +14,15 @@ import org.lms.entity.Coupons;
 */
 public interface CouponsService {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result add(CouponsDto couponsDto);
+
+    Result update(CouponsDto couponsDto);
+
+    Result delete(List<Long> ids);
+
+    Result queryById(Long id);
+
+    Result search(CouponsDto couponsDto);
 }

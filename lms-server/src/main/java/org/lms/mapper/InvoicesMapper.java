@@ -1,7 +1,12 @@
 package org.lms.mapper;
 
 
+import org.lms.Enum.OpreationType;
+import org.lms.annotation.AutoFill;
+import org.lms.dto.InvoicesDto;
 import org.lms.entity.Invoices;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -14,7 +19,7 @@ public interface InvoicesMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Invoices record);
-
+    @AutoFill({OpreationType.CREATEDAT,OpreationType.UPDATEDAT})
     int insertSelective(Invoices record);
 
     Invoices selectByPrimaryKey(Long id);
@@ -23,4 +28,7 @@ public interface InvoicesMapper {
 
     int updateByPrimaryKey(Invoices record);
 
+    List<Invoices> findAll();
+
+    List<Invoices> search(InvoicesDto invoicesDto);
 }

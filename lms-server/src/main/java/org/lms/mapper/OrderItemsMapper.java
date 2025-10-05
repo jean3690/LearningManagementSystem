@@ -1,7 +1,10 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.entity.OrderItems;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,5 @@ public interface OrderItemsMapper {
 
     int updateByPrimaryKey(OrderItems record);
 
+    List<OrderItems> list(@Param("ids") List<Long> ids);
 }

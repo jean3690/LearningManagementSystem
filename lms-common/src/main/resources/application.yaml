@@ -1,0 +1,3 @@
+jwt:
+  token: "SDFGjhdsfalshdfHFdsjkdsfds121232131afasdfac"
+  ttl: 30 * 60 * 1000L

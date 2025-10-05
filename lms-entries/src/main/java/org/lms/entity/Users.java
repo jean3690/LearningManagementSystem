@@ -1,8 +1,10 @@
 package org.lms.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Users {
+@Schema(name = "用户")
+public class Users implements Serializable {
     /**
      * 用户唯一标识ID
      */

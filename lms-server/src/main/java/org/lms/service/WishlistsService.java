@@ -1,6 +1,11 @@
 package org.lms.service;
 
 
+import org.lms.dto.WishlistsDto;
+import org.lms.response.Result;
+
+import java.time.Instant;
+import java.util.List;
 
 /**
 * @author jeang
@@ -9,4 +14,11 @@ package org.lms.service;
 */
 public interface WishlistsService  {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result searchByCreatedAt(Instant createdAt);
+
+    Result add(WishlistsDto wishlistsDto);
+
+    Result delete(List<Long> ids);
 }

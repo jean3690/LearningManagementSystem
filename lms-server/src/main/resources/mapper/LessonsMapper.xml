@@ -31,6 +31,17 @@
         from lessons
         where  id = #{id} 
     </select>
+    <select id="list" resultType="org.lms.entity.Lessons">
+        select
+        <include refid="Base_Column_List"></include>
+        from lessons
+        <where>
+            module_id in
+            <foreach collection="ids" open="(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from lessons

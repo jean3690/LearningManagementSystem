@@ -1,8 +1,18 @@
 package org.lms.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.lms.dto.CourseModulesDto;
+import org.lms.entity.CourseReviews;
+import org.lms.mapper.CourseReviewsMapper;
+import org.lms.response.Result;
 import org.lms.service.CourseReviewsService;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -11,7 +21,32 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class CourseReviewsServiceImpl implements CourseReviewsService {
+    private CourseReviewsMapper courseReviewsMapper;
+    private StringRedisTemplate stringRedisTemplate;
 
+    public CourseReviewsServiceImpl(CourseReviewsMapper courseReviewsMapper, StringRedisTemplate stringRedisTemplate) {
+        this.courseReviewsMapper = courseReviewsMapper;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
+
+    @Override
+    public Result page(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CourseReviews> courseReviewsList = courseReviewsMapper.findAll();
+        return Result.success(new PageInfo<>(courseReviewsList));
+    }
+
+    @Override
+    public Result search(CourseModulesDto courseModulesDto) {
+        List<CourseReviews> courseReviewsList = courseReviewsMapper.search(courseModulesDto);
+        return Result.success(courseReviewsList);
+    }
+
+    @Override
+    public Result delete(List<Long> ids) {
+        int count = courseReviewsMapper.deleteBatch(ids);
+        return Result.success();
+    }
 }
 
 

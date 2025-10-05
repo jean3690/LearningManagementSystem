@@ -32,10 +32,61 @@
         from coupons
         where  id = #{id} 
     </select>
+    <select id="findAll" resultType="org.lms.entity.Coupons">
+        SELECT * FROM coupons
+    </select>
+    <select id="searchByCouponsDto" resultType="org.lms.dto.CouponsDto">
+        SELECT * FROM coupons
+        <where>
+            <if test="code != null">
+                code = #{code}
+            </if>
+            <if test="description != null">
+                and description = #{description}
+            </if>
+            <if test="discountType != null">
+                and discount_type = #{discountType}
+            </if>
+            <if test="discountValue != null">
+                and discount_value = #{discountValue}
+            </if>
+            <if test="maxDiscountAmount != null">
+                and max_discount_amount = #{maxDiscountAmount}
+            </if>
+            <if test="minPurchaseAmount != null">
+                and min_purchase_amount = #{minPurchaseAmount}
+            </if>
+            <if test="usageLimit != null">
+                and usage_limit = #{usageLimit}
+            </if>
+            <if test="usedCount != null">
+                and used_count = #{usedCount}
+            </if>
+            <if test="validFrom != null">
+                and valid_from = #{validFrom}
+            </if>
+            <if test="validUntil != null">
+                and valid_until = #{validUntil}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from coupons
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        DELETE FROM coupons
+        WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Coupons" useGeneratedKeys="true">
         insert into coupons

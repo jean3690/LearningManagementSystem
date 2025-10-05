@@ -6,6 +6,9 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -15,9 +18,12 @@ import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
+@Component
 public class JwtUtil {
-    public static final long JWT_TTL = 30 * 60 * 1000L;  // 有效期3分钟
-    public static final String JWT_KEY = "SDFGjhdsfalshdfHFdsjkdsfds121232131afasdfac";
+    @Value("#{jwtProperties.ttl}")
+    public static long JWT_TTL;  // 有效期3分钟
+    @Value("#{jwtProperties.token}")
+    public static String JWT_KEY;
 
     public static String getUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");

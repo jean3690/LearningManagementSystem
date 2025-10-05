@@ -1,7 +1,11 @@
 package org.lms.service;
 
 
+import org.lms.dto.CourseModulesDto;
 import org.lms.entity.CourseReviews;
+import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -10,4 +14,9 @@ import org.lms.entity.CourseReviews;
 */
 public interface CourseReviewsService  {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result search(CourseModulesDto courseModulesDto);
+
+    Result delete(List<Long> ids);
 }

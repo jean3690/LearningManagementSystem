@@ -1,7 +1,10 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.entity.LessonProgress;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,5 @@ public interface LessonProgressMapper {
 
     int updateByPrimaryKey(LessonProgress record);
 
+    List<LessonProgress> findByStaus(@Param("ids") List<Long> ids, @Param("lessonProgressStatus") String lessonProgressStatus);
 }

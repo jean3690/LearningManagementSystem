@@ -1,6 +1,10 @@
 package org.lms.service;
 
 
+import org.lms.dto.CoursesDto;
+import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -9,4 +13,15 @@ package org.lms.service;
 */
 public interface CoursesService  {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result queryById(Long id);
+
+    Result add(CoursesDto coursesDto);
+
+    Result search(CoursesDto coursesDto);
+
+    Result update(CoursesDto coursesDto);
+
+    Result delete(List<Long> ids);
 }

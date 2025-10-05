@@ -1,8 +1,10 @@
 package org.lms.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Notifications {
+@Schema(name = "通知")
+public class Notifications implements Serializable {
     /**
      * 通知ID
      */

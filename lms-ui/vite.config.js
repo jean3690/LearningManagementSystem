@@ -11,11 +11,12 @@ export default defineConfig({
       Pages(
           {
               dirs: ['src/pages'],
-              extensions: ['vue']
+              extensions: ['vue'],
+              exclude: ['**/components/*.vue'],
           }
       ),
       Components({
           resolvers: [ElementPlusResolver()]
-      })
+      }),
   ],
 })
