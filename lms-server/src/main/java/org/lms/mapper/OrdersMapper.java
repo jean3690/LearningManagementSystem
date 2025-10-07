@@ -2,6 +2,9 @@ package org.lms.mapper;
 
 
 import org.lms.entity.Orders;
+import org.lms.vo.OrdersDetails;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -23,4 +26,7 @@ public interface OrdersMapper {
 
     int updateByPrimaryKey(Orders record);
 
+    List<OrdersDetails> details();
+
+    List<OrdersDetails> search(Orders orders);
 }

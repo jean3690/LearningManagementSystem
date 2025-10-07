@@ -1,4 +1,4 @@
-package org.lms.controller.admin;
+package org.lms.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,8 +8,8 @@ import org.lms.response.Result;
 import org.lms.service.OrdersService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("adminOrdersController")
-@RequestMapping("/admin/orders")
+@RestController("userOrdersController")
+@RequestMapping("/user/orders")
 @Slf4j
 @Tag(name = "订单管理")
 public class OrdersController {

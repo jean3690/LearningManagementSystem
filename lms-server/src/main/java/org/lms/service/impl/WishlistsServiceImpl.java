@@ -9,6 +9,7 @@ import org.lms.mapper.WishlistsMapper;
 import org.lms.response.Result;
 import org.lms.service.WishlistsService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,6 +24,12 @@ import java.util.List;
 public class WishlistsServiceImpl  implements WishlistsService {
 
     private WishlistsMapper wishlistsMapper;
+    private StringRedisTemplate stringRedisTemplate;
+
+    public WishlistsServiceImpl(WishlistsMapper wishlistsMapper, StringRedisTemplate stringRedisTemplate) {
+        this.wishlistsMapper = wishlistsMapper;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     @Override
     public Result page(Integer pageNum, Integer pageSize) {

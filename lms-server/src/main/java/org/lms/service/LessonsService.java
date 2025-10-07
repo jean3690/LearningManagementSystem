@@ -1,6 +1,10 @@
 package org.lms.service;
 
 
+import org.lms.entity.Lessons;
+import org.lms.response.Result;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -9,4 +13,15 @@ package org.lms.service;
 */
 public interface LessonsService {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result search(Lessons lessons);
+
+    Result queryById(Long id);
+
+    Result add(Lessons lessons);
+
+    Result update(Lessons lessons);
+
+    Result delete(List<Long> ids);
 }

@@ -1,6 +1,8 @@
 package org.lms.service;
 
 
+import org.lms.entity.Orders;
+import org.lms.response.Result;
 
 /**
 * @author jeang
@@ -9,4 +11,7 @@ package org.lms.service;
 */
 public interface OrdersService  {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result search(Orders orders);
 }

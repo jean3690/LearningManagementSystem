@@ -1,6 +1,8 @@
 package org.lms.service;
 
 
+import org.lms.entity.LessonProgress;
+import org.lms.response.Result;
 
 /**
 * @author jeang
@@ -9,4 +11,7 @@ package org.lms.service;
 */
 public interface LessonProgressService {
 
+    Result page(Integer pageNum, Integer pageSize);
+
+    Result search(LessonProgress lessonProgress);
 }

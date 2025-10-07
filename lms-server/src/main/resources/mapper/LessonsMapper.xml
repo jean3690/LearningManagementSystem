@@ -42,10 +42,64 @@
             </foreach>
         </where>
     </select>
+    <select id="findAll" resultType="org.lms.entity.Lessons">
+        select
+        <include refid="Base_Column_List"></include>
+        from lessons
+    </select>
+    <select id="search" resultType="org.lms.entity.Lessons">
+        select
+        <include refid="Base_Column_List"></include>
+        from lessons
+        <where>
+            <if test="moduleId != null">
+                and module_id = #{moduleId}
+            </if>
+            <if test="title != null">
+                and title = #{title}
+            </if>
+            <if test="contentType != null">
+                and content_type = #{contentType}
+            </if>
+            <if test="content != null">
+                and content = #{content}
+            </if>
+            <if test="videoUrl != null">
+                and video_url = #{videoUrl}
+            </if>
+            <if test="videoDuration != null">
+                and video_duration = #{videoDuration}
+            </if>
+            <if test="attachmentUrl != null">
+                and attachment_url = #{attachmentUrl}
+            </if>
+            <if test="sortOrder != null">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="isPreviewAvailable != null">
+                and is_preview_available = #{isPreviewAvailable}
+            </if>
+            <if test="createdAt != null">
+                and created_at &lt;= #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at &lt;= #{updatedAt}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from lessons
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        delete from lessons
+        <where>
+            id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Lessons" useGeneratedKeys="true">
         insert into lessons

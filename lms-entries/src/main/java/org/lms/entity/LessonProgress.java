@@ -28,6 +28,8 @@ public class LessonProgress implements Serializable {
      */
     private Long enrollmentId;
 
+    private String username;
+
     /**
      * 课时ID
      */

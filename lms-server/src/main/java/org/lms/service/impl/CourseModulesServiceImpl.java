@@ -30,6 +30,13 @@ public class CourseModulesServiceImpl implements CourseModulesService {
     private LessonsMapper lessonsMapper;
     private TransactionTemplate transactionTemplate;
 
+    public CourseModulesServiceImpl(CourseModulesMapper courseModulesMapper, CoursesMapper coursesMapper, LessonsMapper lessonsMapper, TransactionTemplate transactionTemplate) {
+        this.courseModulesMapper = courseModulesMapper;
+        this.coursesMapper = coursesMapper;
+        this.lessonsMapper = lessonsMapper;
+        this.transactionTemplate = transactionTemplate;
+    }
+
     @Override
     public Result page(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);

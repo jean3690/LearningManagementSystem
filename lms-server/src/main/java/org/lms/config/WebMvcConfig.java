@@ -12,11 +12,6 @@ import static org.lms.constant.SystemConstant.STATIC_WITHE_PATH_LIST;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-
-    }
-
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(STATIC_WITHE_PATH_LIST)
                 .addResourceLocations(STATIC_WITHE_LOCATION_LIST)

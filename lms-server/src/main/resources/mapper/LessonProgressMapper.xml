@@ -43,10 +43,61 @@
             #{id}
         </foreach>
     </select>
+    <select id="findAll" resultType="org.lms.entity.LessonProgress">
+        select
+        <include refid="Base_Column_List"></include>,users.username
+        from lesson_progress
+        inner join enrollments on enrollments.id = lesson_progress.enrollment_id
+        inner join users on users.id = enrollments.user_id
+    </select>
+    <select id="search" resultType="org.lms.entity.LessonProgress">
+        <include refid="Base_Column_List"></include>,users.username
+        from lesson_progress
+        inner join enrollments on enrollments.id = lesson_progress.enrollment_id
+        inner join users on users.id = enrollments.user_id
+        <where>
+            <if test="username!=null and username!=''">
+                users.username = #{username}
+            </if>
+            <if test="enrollmentId != null">
+                and enrollment_id = #{enrollmentId}
+            </if>
+            <if test="lessonId != null">
+                and lesson_id = #{lessonId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="progressPercentage != null">
+                and progress_percentage = #{progressPercentage}
+            </if>
+            <if test="lastPosition != null">
+                and last_position = #{lastPosition}
+            </if>
+            <if test="startedAt != null">
+                and started_at &lt;= #{startedAt}
+            </if>
+            <if test="completedAt != null">
+                and completed_at &lt;= #{completedAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at &lt; #{updatedAt}
+            </if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from lesson_progress
         where  id = #{id} 
+    </delete>
+    <delete id="deleteBatch">
+        delete from lesson_progress
+        <where>
+            id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.LessonProgress" useGeneratedKeys="true">
         insert into lesson_progress

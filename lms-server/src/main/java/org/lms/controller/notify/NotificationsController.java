@@ -2,10 +2,16 @@ package org.lms.controller.notify;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.lms.service.NotificationsService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("notificationsController")
 @Slf4j
 @Tag(name = "系统通知")
 public class NotificationsController {
+    private NotificationsService notificationsService;
+
+    public NotificationsController(NotificationsService notificationsService) {
+        this.notificationsService = notificationsService;
+    }
 }

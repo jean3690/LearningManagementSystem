@@ -1,4 +1,4 @@
-package org.lms.controller.admin;
+package org.lms.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("adminLessonController")
-@RequestMapping("/admin/lesson")
+@RestController("userLessonController")
+@RequestMapping("/user/lesson")
 @Slf4j
 @Tag(name = "课程课时内容管理")
 public class LessonController {

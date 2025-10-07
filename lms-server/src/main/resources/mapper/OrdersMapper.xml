@@ -20,11 +20,47 @@
             <result property="createdAt" column="created_at" />
             <result property="updatedAt" column="updated_at" />
     </resultMap>
+    <resultMap id="orderDetailsMap" type="org.lms.vo.OrdersDetails">
+        <id property="id" column="id" />
+        <result property="orderNumber" column="order_number" />
+        <result property="userId" column="user_id" />
+        <result property="totalAmount" column="total_amount" />
+        <result property="discountAmount" column="discount_amount" />
+        <result property="taxAmount" column="tax_amount" />
+        <result property="finalAmount" column="final_amount" />
+        <result property="couponId" column="coupon_id" />
+        <result property="status" column="status" />
+        <result property="paymentMethod" column="payment_method" />
+        <result property="paymentId" column="payment_id" />
+        <result property="billingAddress" column="billing_address" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+        <collection property="orderItemsList" ofType="org.lms.entity.OrderItems" javaType="java.util.ArrayList">
+            <id property="id" column="order_item_id"/>
+            <result property="orderId" column="order_id"/>
+            <result property="courseId" column="course_id"/>
+            <result property="courseTitle" column="course_title"/>
+            <result property="unitPrice" column="unit_price"/>
+            <result property="discountAmount" column="order_item_discount_amount"/>
+            <result property="finalPrice" column="final_price"/>
+            <result property="createdAt" column="order_item_create_at"/>
+        </collection>
+    </resultMap>
 
     <sql id="Base_Column_List">
         id,order_number,user_id,total_amount,discount_amount,tax_amount,
         final_amount,coupon_id,status,payment_method,payment_id,
         billing_address,created_at,updated_at
+    </sql>
+    <sql id="Order_Item_List">
+        order_items.id as order_item_id,
+        order_items.order_id,
+        order_items.course_id,
+        courses.title as course_title,
+        order_items.unit_price,
+        order_items.discount_amount as order_item_discount_amount,
+        order_items.final_price,
+        order_items.create_at as order_item_create_at
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,6 +68,63 @@
         <include refid="Base_Column_List" />
         from orders
         where  id = #{id} 
+    </select>
+    <select id="details" resultMap="orderDetailsMap">
+        select
+        <include refid="Base_Column_List"></include>,
+        <include refid="Order_Item_List"></include>
+        from orders
+        inner join order_items on order_items.order_id = orders.id
+        inner join courses on courses.id = order_items.course_id
+    </select>
+    <select id="search" resultMap="orderDetailsMap">
+        select
+        <include refid="Base_Column_List"></include>,
+        <include refid="Order_Item_List"></include>
+        from orders
+        inner join order_items on order_items.order_id = orders.id
+        inner join courses on courses.id = order_items.course_id
+        <where>
+            <if test="orderNumber != null">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="totalAmount != null">
+                and total_amount = #{totalAmount}
+            </if>
+            <if test="discountAmount != null">
+                and discount_amount = #{discountAmount}
+            </if>
+            <if test="taxAmount != null">
+                and tax_amount = #{taxAmount}
+            </if>
+            <if test="finalAmount != null">
+                and final_amount = #{finalAmount}
+            </if>
+            <if test="couponId != null">
+                and coupon_id = #{couponId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="paymentMethod != null">
+                and payment_method = #{paymentMethod}
+            </if>
+            <if test="paymentId != null">
+                and payment_id = #{paymentId}
+            </if>
+            <if test="billingAddress != null">
+                and billing_address = #{billingAddress}
+            </if>
+            <if test="createdAt != null">
+                and created_at &lt;= #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at &lt;= #{updatedAt}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

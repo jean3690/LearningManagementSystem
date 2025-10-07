@@ -77,6 +77,4 @@ public class Lessons implements Serializable {
      * 最后更新时间
      */
     private Instant updatedAt;
-
-    private LessonProgress lessonProgress;
 }

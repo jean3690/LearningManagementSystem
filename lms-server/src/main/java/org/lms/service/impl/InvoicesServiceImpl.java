@@ -11,6 +11,7 @@ import org.lms.mapper.OrdersMapper;
 import org.lms.response.Result;
 import org.lms.service.InvoicesService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,13 @@ import java.util.List;
 public class InvoicesServiceImpl implements InvoicesService {
     private InvoicesMapper invoicesMapper;
     private OrdersMapper ordersMapper;
+    private StringRedisTemplate stringRedisTemplate;
+
+    public InvoicesServiceImpl(InvoicesMapper invoicesMapper, OrdersMapper ordersMapper, StringRedisTemplate stringRedisTemplate) {
+        this.invoicesMapper = invoicesMapper;
+        this.ordersMapper = ordersMapper;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     @Override
     public Result page(Integer pageNum, Integer pageSize) {

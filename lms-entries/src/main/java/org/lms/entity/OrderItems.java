@@ -33,6 +33,7 @@ public class OrderItems implements Serializable {
      * 课程ID
      */
     private Long courseId;
+    private String courseTitle;
 
     /**
      * 商品单价

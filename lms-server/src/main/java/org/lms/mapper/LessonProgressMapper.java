@@ -27,4 +27,10 @@ public interface LessonProgressMapper {
     int updateByPrimaryKey(LessonProgress record);
 
     List<LessonProgress> findByStaus(@Param("ids") List<Long> ids, @Param("lessonProgressStatus") String lessonProgressStatus);
+
+    int deleteBatch(@Param("ids") List<Long> ids);
+
+    List<LessonProgress> findAll();
+
+    List<LessonProgress> search(LessonProgress lessonProgress);
 }
