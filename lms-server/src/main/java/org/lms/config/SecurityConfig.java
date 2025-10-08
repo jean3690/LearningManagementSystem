@@ -2,7 +2,6 @@ package org.lms.config;
 
 import org.lms.security.Filter.CustomAfterFilter;
 import org.lms.security.Filter.JwtAuthorizeFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 
     private JwtAuthorizeFilter jwtAuthorizeFilter;
     private CustomAfterFilter customAfterFilter;
@@ -35,17 +33,34 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(CsrfConfigurer::disable)
-                .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth->{
-                    auth.requestMatchers("/**").permitAll()
-                            .anyRequest().authenticated();
-                }).addFilterBefore(jwtAuthorizeFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(customAfterFilter,UsernamePasswordAuthenticationFilter.class).build();
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors->cors.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/doc.html",
+                                "/webjars/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/favicon.ico",
+                                "/swagger-ui.html",
+                                "/img.icons/**"
+                        ).permitAll()
+                        .requestMatchers("/admin/user/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                .addFilterBefore(jwtAuthorizeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(customAfterFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 }

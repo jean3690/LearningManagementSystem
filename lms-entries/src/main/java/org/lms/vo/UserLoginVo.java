@@ -1,5 +1,6 @@
 package org.lms.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,6 @@ public class UserLoginVo {
      * 用户邮箱，用于登录和通知
      */
     private String email;
-
-    /**
-     * 加密后的密码
-     */
-    private String password;
 
     /**
      * 用户名字

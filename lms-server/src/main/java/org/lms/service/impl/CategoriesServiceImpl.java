@@ -129,7 +129,7 @@ public class CategoriesServiceImpl implements CategoriesService {
                 map.put(String.valueOf(categories.getId()),JsonUtil.toJson(categories));
             }
             stringRedisTemplate.opsForHash().putAll(CATEGORY_HASH_TOKEN,map);
-            stringRedisTemplate.expire(CATEGORY_HASH_TOKEN,RandomUtils.secure().randomInt(40,50),TimeUnit.MINUTES);
+            stringRedisTemplate.expire(CATEGORY_HASH_TOKEN,RandomUtils.nextInt(40,50),TimeUnit.MINUTES);
         }
         return categoriesList;
     }

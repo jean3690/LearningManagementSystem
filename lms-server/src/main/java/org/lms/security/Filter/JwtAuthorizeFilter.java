@@ -32,12 +32,25 @@ import java.util.concurrent.TimeUnit;
 public class JwtAuthorizeFilter extends OncePerRequestFilter {
     private UsersMapper usersMapper;
     private RedisTemplate<String,Object> redisTemplate;
-    private final ExecutorService executorService;
 
-    public JwtAuthorizeFilter(UsersMapper usersMapper, RedisTemplate<String,Object> redisTemplate, @Qualifier("taskExecutor") ExecutorService executorService) {
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/doc.html") ||
+                path.startsWith("/webjars/") ||
+                path.startsWith("/swagger-resources") ||
+                path.startsWith("/swagger-resources/") ||
+                path.startsWith("/v3/api-docs") ||
+                path.startsWith("/v3/api-docs/") ||
+                path.startsWith("/swagger-ui/") ||
+                path.equals("/favicon.ico") ||
+                path.equals("/swagger-ui.html") ||
+                path.startsWith("/admin/user/");
+    }
+
+    public JwtAuthorizeFilter(UsersMapper usersMapper, RedisTemplate<String,Object> redisTemplate) {
         this.usersMapper = usersMapper;
         this.redisTemplate = redisTemplate;
-        this.executorService = executorService;
     }
 
     @Override
@@ -45,6 +58,7 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         if(!StringUtils.hasText(token)||!token.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
+            return;
         }
         token = token.substring(7);
         String userId;

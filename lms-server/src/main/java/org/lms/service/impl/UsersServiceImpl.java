@@ -4,6 +4,7 @@ package org.lms.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.lms.Enum.AccountType;
 import org.lms.Enum.UserType;
 import org.lms.constant.RedisConstant;
@@ -25,6 +26,7 @@ import org.springframework.util.StringUtils;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 * @createDate 2025-09-13 22:53:03
 */
 @Service
+@Slf4j
 public class UsersServiceImpl implements UsersService {
 
     private final UsersMapper usersMapper;
@@ -77,10 +80,11 @@ public class UsersServiceImpl implements UsersService {
             return Result.error();
         }
         if(!StringUtils.hasText(usersDto.getUsername())||(usersDto.getUsername().length()<=3)){
-            return Result.error();
+            return Result.error("用户名不能为空或用户名长度不能小于3");
         }
-        if(!StringUtils.hasText(usersDto.getPassword())||(usersDto.getPassword().length()<=5)){
-            return Result.error();
+        if(!StringUtils.hasText(usersDto.getPassword())||(usersDto.getPassword().length()<=3)){
+            log.info(usersDto.getPassword()+"{}",usersDto.getPassword().length());
+            return Result.error("密码不能为空或密码长度不能小于3");
         }
         Users users = Users.builder()
                 .isActive(1)
@@ -92,10 +96,12 @@ public class UsersServiceImpl implements UsersService {
                 .build();
         BeanUtils.copyProperties(usersDto,users);
         users.setPassword(new BCryptPasswordEncoder().encode(usersDto.getPassword()));
+        users.setUuid(UUID.randomUUID().toString());
         int insert = usersMapper.insertSelective(users);
         if(insert<0){
             return Result.error("添加失败");
         }
+        log.info("11111111111111111111111");
         return Result.success();
     }
 

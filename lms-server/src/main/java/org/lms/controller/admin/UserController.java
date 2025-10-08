@@ -46,6 +46,7 @@ public class UserController {
     @PostMapping("/add")
     @Operation(summary = "添加用户")
     public Result add(@RequestBody UsersDto usersDto){
+        log.info("{}",usersDto);
         return usersService.addUser(usersDto);
     }
 

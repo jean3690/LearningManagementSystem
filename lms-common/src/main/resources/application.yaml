@@ -1,3 +1,4 @@
 jwt:
   token: "SDFGjhdsfalshdfHFdsjkdsfds121232131afasdfac"
-  ttl: 30 * 60 * 1000L
+  ttl: 10000000000000000
+#  1800000

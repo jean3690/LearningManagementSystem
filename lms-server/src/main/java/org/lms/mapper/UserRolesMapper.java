@@ -2,7 +2,7 @@ package org.lms.mapper;
 
 
 import org.lms.entity.UserRoles;
-import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 

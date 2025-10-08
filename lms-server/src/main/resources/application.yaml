@@ -41,9 +41,18 @@ spring:
       # 用来检测数据库连接是否有效的sql 必须是一个查询语句(oracle中为 select 1 from dual)
       validation-query: select 'x'
 mybatis:
-  mapper-locations: classpath:mapper/*.xml;
+  mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
@@ -52,22 +61,20 @@ springdoc:
     operations-sorter: alpha
   api-docs:
     path: /v3/api-docs
+    enabled: true
   group-configs:
-    - group: '后台管理Api'
+    - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: org.lms.controller.admin
-    - group: '用户Api'
-      paths-to-match:
-        - '/**'
-      packages-to-scan: org.lms.controller.user
-        -
+      packages-to-scan: org.lms
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: true
   setting:
     language: zh_cn
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-server:
-  port: 8080
+  production: false
+logging:
+  level:
+    org.lms.mapper: debug
+jwt:
+  token: "SDFGjhdsfalshdfHFdsjkdsfds121232131afasdfac"
+  ttl: 10000000000000000
