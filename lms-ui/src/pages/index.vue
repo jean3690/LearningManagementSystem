@@ -1,12 +1,11 @@
-<script setup>
-
-</script>
-
 <template>
-<div>hellowww</div>
-  <el-button></el-button>
+    <myHome/>
 </template>
-
-<style scoped>
-
+<script setup>
+import myHome from '@/pages/home.vue'
+import router from '../router';
+router.push('/home')
+</script>
+<style lang="">
+    
 </style>

@@ -1,52 +1,105 @@
 <template>
-  <el-aside>
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-      <el-radio-button :value="false">expand</el-radio-button>
-      <el-radio-button :value="true">collapse</el-radio-button>
-    </el-radio-group>
+  <el-aside style="text-align: center;">
+    <!-- Logo 和标题 -->
+    <div class="flex justify-center items-center mt-2">
+      <el-icon style="font-size: 30px;">
+        <i-ep-eleme />
+      </el-icon>
+      <slot name="title">
+        <h2 class="text-2xl text-white mb-4 ml-2">后台管理系统</h2>
+      </slot>
+    </div>
+
+    <!-- 菜单 -->
     <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        :collapse="isCollapse"
+      :default-active="$route.path"
+      :collapse="isCollapse"
+      router
+      background-color="gray"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      class="border-none"
     >
-      <el-sub-menu index="1">
+      <el-menu-item
+        v-for="(item, index) in array"
+        :key="index"
+        :index="`/home/${item.path}`"
+      >
+        <el-icon>
+          <!-- 可以根据 item.name 动态设置图标，这里先用一个通用图标 -->
+          <component :is="getIconComponent(item.path)" />
+        </el-icon>
         <template #title>
-          <el-icon><location /></el-icon>
-          <span>Navigator One</span>
+          <h3 class="text-xl">{{ item.name }}</h3>
         </template>
-        <el-menu-item-group>
-          <template #title><span>Group One</span></template>
-          <el-menu-item index="1-1">item one</el-menu-item>
-          <el-menu-item index="1-2">item two</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group Two">
-          <el-menu-item index="1-3">item three</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="1-4">
-          <template #title><span>item four</span></template>
-          <el-menu-item index="1-4-1">item one</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-      <el-menu-item index="2">
-        <el-icon><icon-menu /></el-icon>
-        <template #title>Navigator Two</template>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <el-icon><document /></el-icon>
-        <template #title>Navigator Three</template>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <el-icon><setting /></el-icon>
-        <template #title>Navigator Four</template>
       </el-menu-item>
     </el-menu>
   </el-aside>
 </template>
+
 <script setup>
-import {ref} from 'vue'
-const isCollapse = ref(true)
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import {
+  User,
+  Tickets,
+  Setting,
+  Document,
+  Menu,
+  Checked,
+  ChatLineSquare,
+  Clock,
+  Money,
+  Ticket,
+  ShoppingCart,
+  Plus
+} from '@element-plus/icons-vue'
+
+// 定义图标映射
+const iconMap = {
+  user: User,
+  course: Tickets,
+  module: Setting,
+  section: Document,
+  category: Menu,
+  courseEnroll: Checked,
+  courseComment: ChatLineSquare,
+  courseStudy: Clock,
+  invoice: Money,
+  coupon: Ticket,
+  order: ShoppingCart,
+  default: Plus
+}
+
+const getIconComponent = (path) => {
+  return iconMap[path] || iconMap.default
+}
+
+// 当前路由
+const route = useRoute()
+
+// 是否折叠菜单
+const isCollapse = ref(false)
+
+// 菜单项数据
+const array = ref([
+  { name: '用户管理接口', path: 'user' },
+  { name: '课程管理接口', path: 'course' },
+  { name: '课程模块管理接口', path: 'module' },
+  { name: '课程课时内容管理接口', path: 'section' },
+  { name: '分类管理接口', path: 'category' },
+  { name: '课程报名管理接口', path: 'courseEnroll' },
+  { name: '课程评论管理接口', path: 'courseComment' },
+  { name: '课程学习进度管理接口', path: 'courseStudy' },
+  { name: '发票管理接口', path: 'invoice' },
+  { name: '优惠券管理接口', path: 'coupon' },
+  { name: '订单管理接口', path: 'order' }
+])
 </script>
 
 <style scoped>
-
+/* 去除 el-menu 默认边框 */
+.el-menu {
+  border-right: none;
+}
 </style>
