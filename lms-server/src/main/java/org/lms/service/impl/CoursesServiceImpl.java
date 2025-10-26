@@ -3,7 +3,6 @@ package org.lms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import org.lms.dto.CoursesDto;
 import org.lms.entity.*;
 import org.lms.exception.deleteFailException;
@@ -15,9 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,9 +53,9 @@ public class CoursesServiceImpl implements CoursesService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, CoursesDto coursesDto) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Courses> coursesList = coursesMapper.findAll();
+        List<Courses> coursesList = coursesMapper.findAll(coursesDto);
         return Result.success(new PageInfo<>(coursesList));
     }
 

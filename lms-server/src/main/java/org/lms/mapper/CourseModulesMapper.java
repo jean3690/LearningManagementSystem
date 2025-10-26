@@ -30,7 +30,7 @@ public interface CourseModulesMapper {
 
     List<CourseModules> list(@Param("ids") List<Long> list);
 
-    List<CourseModules> findAll();
+    List<CourseModules> findAll(CourseModulesDto courseModulesDto);
 
     List<CourseModules> search(CourseModulesDto courseModulesDto);
 

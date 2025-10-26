@@ -80,8 +80,10 @@ public class UserController {
      */
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return usersService.pageQuery(pageNum,pageSize);
+    public Result page(@PathVariable("pageNum") Integer pageNum,
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody UsersDto usersDto){
+        return usersService.pageQuery(pageNum,pageSize,usersDto);
     }
 
     /**

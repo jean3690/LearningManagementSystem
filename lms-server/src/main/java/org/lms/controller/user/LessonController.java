@@ -24,7 +24,7 @@ public class LessonController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize){
-        return lessonsService.page(pageNum,pageSize);
+        return lessonsService.page(pageNum,pageSize, lessonsDto);
     }
     @GetMapping("/search")
     @Operation(summary = "搜索")

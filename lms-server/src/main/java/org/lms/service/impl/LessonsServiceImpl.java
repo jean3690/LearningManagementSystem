@@ -3,6 +3,7 @@ package org.lms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.lms.dto.LessonsDto;
 import org.lms.entity.CourseModules;
 import org.lms.entity.Lessons;
 import org.lms.mapper.CourseModulesMapper;
@@ -13,7 +14,6 @@ import org.lms.service.LessonsService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ public class LessonsServiceImpl implements LessonsService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, LessonsDto lessonsDto) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Lessons> lessonsList = lessonsMapper.findAll();
+        List<Lessons> lessonsList = lessonsMapper.findAll(lessonsDto);
         return Result.success(new PageInfo<>(lessonsList));
     }
 

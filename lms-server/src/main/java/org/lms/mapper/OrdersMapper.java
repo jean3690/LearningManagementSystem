@@ -1,6 +1,7 @@
 package org.lms.mapper;
 
 
+import org.lms.dto.OrdersDto;
 import org.lms.entity.Orders;
 import org.lms.vo.OrdersDetails;
 
@@ -26,7 +27,7 @@ public interface OrdersMapper {
 
     int updateByPrimaryKey(Orders record);
 
-    List<OrdersDetails> details();
+    List<OrdersDetails> details(OrdersDto ordersDto);
 
     List<OrdersDetails> search(Orders orders);
 }

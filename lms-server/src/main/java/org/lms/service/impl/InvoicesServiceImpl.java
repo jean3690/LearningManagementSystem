@@ -15,7 +15,6 @@ import org.lms.service.InvoicesService;
 import org.lms.util.RedisUtil;
 import org.lms.utils.JsonUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -41,7 +40,7 @@ public class InvoicesServiceImpl implements InvoicesService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, InvoicesDto invoicesDto) {
         String key = RedisConstant.INVOICE_PAGE + pageNum+":"+ pageSize;
         String json = redisUtil.getString(key);
         if(json!=null){
@@ -52,7 +51,7 @@ public class InvoicesServiceImpl implements InvoicesService {
             return Result.success(JsonUtil.jsonToObj(json, PageInfo.class));
         }
         PageHelper.startPage(pageNum,pageSize);
-        List<Invoices> invoicesList = invoicesMapper.findAll();
+        List<Invoices> invoicesList = invoicesMapper.findAll(invoicesDto);
         if(CollectionUtils.isEmpty(invoicesList)){
             redisUtil.setString(key,"_NULL_", ThreadLocalRandom.current().nextLong(8,10), TimeUnit.MINUTES);
             return Result.success(Collections.emptyList());

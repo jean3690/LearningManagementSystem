@@ -11,7 +11,7 @@ import org.lms.response.Result;
 */
 public interface LessonProgressService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, LessonProgress lessonProgress);
 
     Result search(LessonProgress lessonProgress);
 }

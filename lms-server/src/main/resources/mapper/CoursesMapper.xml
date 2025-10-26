@@ -54,6 +54,44 @@
         SELECT
         <include refid="Base_Column_List"></include>
         FROM courses
+        <where>
+            <if test="title!=null and title!=''">
+                and title = #{title}
+            </if>
+            <if test="subtitle!=null and subtitle!=''">
+                and subtitle = #{subtitle}
+            </if>
+            <if test="instructorId!=null">
+                and instructor_id = #{instructorId}
+            </if>
+            <if test="categoryId!=null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="level!=null">
+                and level = #{level}
+            </if>
+            <if test="language!=null and language!=''">
+                and language = #{language}
+            </if>
+            <if test="isDraft!=null">
+                and is_draft = #{isDraft}
+            </if>
+            <if test="isApproved!=null">
+                and is_approved = #{isApproved}
+            </if>
+            <if test="rating!=null">
+                and rating = #{rating}
+            </if>
+            <if test="isFree!=null">
+                and is_free = #{isFree}
+            </if>
+            <if test="willIssueCertificate!=null">
+                and will_issue_certificate = #{willIssueCertificate}
+            </if>
+            <if test="targetAudience!=null">
+                and target_audience = #{targetAudience}
+            </if>
+        </where>
     </select>
     <select id="search" resultType="org.lms.dto.CoursesDto">
         SELECT

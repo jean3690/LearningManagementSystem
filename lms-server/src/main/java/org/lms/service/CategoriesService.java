@@ -25,5 +25,5 @@ public interface CategoriesService  {
 
     ArrayList<Categories> list(List<Long> ids);
 
-    Result pageQuery(Integer pageNum, Integer pageSize);
+    Result pageQuery(Integer pageNum, Integer pageSize, CategoriesDto categoriesDto);
 }

@@ -24,7 +24,7 @@ public class EnrollmentsController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize){
-        return enrollmentsService.page(pageNum,pageSize);
+        return enrollmentsService.page(pageNum,pageSize, enrollments);
     }
     @GetMapping("/search")
     @Operation(summary = "搜索")

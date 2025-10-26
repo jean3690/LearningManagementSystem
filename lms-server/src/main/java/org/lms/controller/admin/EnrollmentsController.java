@@ -23,13 +23,9 @@ public class EnrollmentsController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return enrollmentsService.page(pageNum,pageSize);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody Enrollments enrollments){
-        return enrollmentsService.search(enrollments);
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody Enrollments enrollments){
+        return enrollmentsService.page(pageNum,pageSize,enrollments);
     }
     @PutMapping("/update")
     @Operation(summary = "修改课程报名")

@@ -76,6 +76,47 @@
         from orders
         inner join order_items on order_items.order_id = orders.id
         inner join courses on courses.id = order_items.course_id
+        <where>
+            <if test="orderNumber != null">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="totalAmount != null">
+                and total_amount = #{totalAmount}
+            </if>
+            <if test="discountAmount != null">
+                and discount_amount = #{discountAmount}
+            </if>
+            <if test="taxAmount != null">
+                and tax_amount = #{taxAmount}
+            </if>
+            <if test="finalAmount != null">
+                and final_amount = #{finalAmount}
+            </if>
+            <if test="couponId != null">
+                and coupon_id = #{couponId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="paymentMethod != null">
+                and payment_method = #{paymentMethod}
+            </if>
+            <if test="paymentId != null">
+                and payment_id = #{paymentId}
+            </if>
+            <if test="billingAddress != null">
+                and billing_address = #{billingAddress}
+            </if>
+            <if test="createdAt != null">
+                and created_at &lt;= #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at &lt;= #{updatedAt}
+            </if>
+        </where>
     </select>
     <select id="search" resultMap="orderDetailsMap">
         select

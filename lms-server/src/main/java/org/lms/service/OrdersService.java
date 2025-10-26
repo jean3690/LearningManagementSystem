@@ -1,8 +1,12 @@
 package org.lms.service;
 
 
+import org.lms.dto.OrdersDto;
 import org.lms.entity.Orders;
 import org.lms.response.Result;
+import org.lms.vo.OrdersDetails;
+
+import java.util.List;
 
 /**
 * @author jeang
@@ -11,7 +15,13 @@ import org.lms.response.Result;
 */
 public interface OrdersService  {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, OrdersDto ordersDto);
 
     Result search(Orders orders);
+
+    Result add(OrdersDetails ordersDetails);
+
+    Result update(OrdersDetails ordersDetails);
+
+    Result delete(List<Long> idList);
 }

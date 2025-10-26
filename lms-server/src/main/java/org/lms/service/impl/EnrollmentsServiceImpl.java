@@ -46,9 +46,9 @@ public class EnrollmentsServiceImpl implements EnrollmentsService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, Enrollments enrollments) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Enrollments> enrollmentsList = enrollmentsMapper.findAll();
+        List<Enrollments> enrollmentsList = enrollmentsMapper.findAll(enrollments);
         return Result.success(new PageInfo<>(enrollmentsList));
     }
 

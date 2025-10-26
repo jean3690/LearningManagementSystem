@@ -2,7 +2,6 @@ package org.lms.service;
 
 
 import org.lms.dto.CouponsDto;
-import org.lms.entity.Coupons;
 import org.lms.response.Result;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 */
 public interface CouponsService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, CouponsDto couponsDto);
 
     Result add(CouponsDto couponsDto);
 

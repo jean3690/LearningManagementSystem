@@ -23,7 +23,7 @@ public interface UsersService  {
 
     Result logout(String token);
 
-    Result pageQuery(Integer pageNum, Integer pageSize);
+    Result pageQuery(Integer pageNum, Integer pageSize, UsersDto usersDto);
 
     Result queryById(Long id);
 

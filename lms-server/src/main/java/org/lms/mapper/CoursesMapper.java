@@ -31,7 +31,7 @@ public interface CoursesMapper {
 
     Courses findByCategoryId(@Param("categoryId") Long id);
 
-    List<Courses> findAll();
+    List<Courses> findAll(CoursesDto coursesDto);
 
     List<CoursesDto> search(CoursesDto coursesDto);
 

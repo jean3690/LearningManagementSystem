@@ -37,7 +37,23 @@
         select * from users where username = #{username}
     </select>
     <select id="queryAll" resultType="org.lms.entity.Users">
-        SELECT * FROM users;
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from users
+        <where>
+            <if test="uuid!=null and uuid!=''">
+                and uuid = #{uuid}
+            </if>
+            <if test="email!=null and email!=''">
+                and email = #{email}
+            </if>
+            <if test="username!=null and username!=''">
+                and username = #{username}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone = #{phone}
+            </if>
+        </where>
     </select>
     <select id="queryList" resultType="org.lms.entity.Users">
         SELECT * FROM users WHERE id in

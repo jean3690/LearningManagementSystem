@@ -1,17 +1,14 @@
 package org.lms.service.impl;
 
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import org.lms.dto.CouponsDto;
 import org.lms.entity.Coupons;
 import org.lms.mapper.CouponsMapper;
 import org.lms.response.Result;
 import org.lms.service.CouponsService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -36,9 +33,9 @@ public class CouponsServiceImpl implements CouponsService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, CouponsDto couponsDto) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Coupons> couponsList = couponsMapper.findAll();
+        List<Coupons> couponsList = couponsMapper.findAll(couponsDto);
         return Result.success(new PageInfo<>(couponsList));
     }
 

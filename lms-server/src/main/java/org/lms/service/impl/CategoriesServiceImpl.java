@@ -1,7 +1,6 @@
 package org.lms.service.impl;
 
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.RandomUtils;
@@ -14,7 +13,6 @@ import org.lms.response.Result;
 import org.lms.service.CategoriesService;
 import org.lms.utils.JsonUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -23,7 +21,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static org.lms.constant.RedisConstant.*;
 
@@ -135,12 +132,12 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public Result pageQuery(Integer pageNum, Integer pageSize) {
+    public Result pageQuery(Integer pageNum, Integer pageSize, CategoriesDto categoriesDto) {
         if(pageNum==null||pageSize==null){
             return Result.error("不能为null");
         }
         PageHelper.startPage(pageNum, pageSize);
-        List<Categories> categoriesList = categoriesMapper.selectByPage();
+        List<Categories> categoriesList = categoriesMapper.selectByPage(categoriesDto);
         return Result.success(new PageInfo<Categories>(categoriesList));
     }
 }

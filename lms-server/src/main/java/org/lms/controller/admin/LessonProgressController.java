@@ -21,12 +21,8 @@ public class LessonProgressController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return lessonProgressService.page(pageNum,pageSize);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody LessonProgress lessonProgress){
-        return lessonProgressService.search(lessonProgress);
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody LessonProgress lessonProgress){
+        return lessonProgressService.page(pageNum,pageSize,lessonProgress);
     }
 }

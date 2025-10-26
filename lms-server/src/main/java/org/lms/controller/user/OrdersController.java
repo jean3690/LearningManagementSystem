@@ -22,7 +22,7 @@ public class OrdersController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize){
-        return ordersService.page(pageNum,pageSize);
+        return ordersService.page(pageNum,pageSize, ordersDto);
     }
     @GetMapping("/search")
     @Operation(summary = "搜索")

@@ -13,7 +13,7 @@ import java.util.List;
 */
 public interface CoursesService  {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, CoursesDto coursesDto);
 
     Result queryById(Long id);
 

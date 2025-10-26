@@ -38,6 +38,17 @@
         SELECT
         <include refid="Base_Column_List"></include>
         from categories
+        <where>
+            <if test="name != null and name!=''">
+                and name = #{name}
+            </if>
+            <if test="parentId!=null">
+                and parent_id = #{parentId}
+            </if>
+            <if test="isActive!=null">
+                and is_active = #{isActive}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

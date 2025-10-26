@@ -22,7 +22,7 @@ public class CouponsController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return couponsService.page(pageNum,pageSize);
+        return couponsService.page(pageNum,pageSize, couponsDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询优惠卷")

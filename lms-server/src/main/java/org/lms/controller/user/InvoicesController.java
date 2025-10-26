@@ -22,7 +22,7 @@ public class InvoicesController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return invoicesService.page(pageNum,pageSize);
+        return invoicesService.page(pageNum,pageSize, invoicesDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询发票")

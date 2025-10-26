@@ -30,7 +30,7 @@ public interface LessonProgressMapper {
 
     int deleteBatch(@Param("ids") List<Long> ids);
 
-    List<LessonProgress> findAll();
+    List<LessonProgress> findAll(LessonProgress lessonProgress);
 
     List<LessonProgress> search(LessonProgress lessonProgress);
 }

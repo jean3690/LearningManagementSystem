@@ -20,18 +20,15 @@ public class CoursesController {
     }
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return coursesService.page(pageNum,pageSize);
+    public Result page(@PathVariable("pageNum") Integer pageNum,
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody CoursesDto coursesDto){
+        return coursesService.page(pageNum,pageSize,coursesDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询课程信息")
     public Result queyrById(@PathVariable("id") Long id){
         return coursesService.queryById(id);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody CoursesDto coursesDto){
-        return coursesService.search(coursesDto);
     }
     @PostMapping("/add")
     @Operation(summary = "添加课程信息")

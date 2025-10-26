@@ -2,7 +2,6 @@ package org.lms.service;
 
 
 import org.lms.dto.InvoicesDto;
-import org.lms.entity.Invoices;
 import org.lms.response.Result;
 
 /**
@@ -12,7 +11,7 @@ import org.lms.response.Result;
 */
 public interface InvoicesService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, InvoicesDto invoicesDto);
 
     Result queryById(Long id);
 

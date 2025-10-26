@@ -1,7 +1,6 @@
 package org.lms.mapper;
 
 
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
 import org.lms.Enum.OpreationType;
 import org.lms.annotation.AutoFill;
@@ -29,7 +28,7 @@ public interface CouponsMapper {
     int updateByPrimaryKeySelective(Coupons record);
 
     int updateByPrimaryKey(Coupons record);
-    List<Coupons> findAll();
+    List<Coupons> findAll(CouponsDto couponsDto);
 
     void deleteBatch(@Param("ids") List<Long> ids);
 

@@ -43,6 +43,26 @@
         select
         <include refid="Base_Column_List"></include>
         from enrollments
+        <where>
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+            <if test="courseId!=null">
+                and course_id = #{courseId}
+            </if>
+            <if test="orderItemId!=null">
+                and order_item_id = #{orderItemId}
+            </if>
+            <if test="enrolledAt!=null">
+                and enrolled_at #gt;= #{enrolledAt}
+            </if>
+            <if test="completedAt!=null">
+                and completed_at #gt; = #{completedAt}
+            </if>
+            <if test="isActive!=null">
+                and is_active = #{isActive}
+            </if>
+        </where>
     </select>
     <select id="search" resultType="org.lms.entity.Enrollments">
         select

@@ -3,6 +3,7 @@ package org.lms.mapper;
 
 import org.lms.Enum.OpreationType;
 import org.lms.annotation.AutoFill;
+import org.lms.dto.CategoriesDto;
 import org.lms.entity.Categories;
 
 import java.util.ArrayList;
@@ -30,5 +31,5 @@ public interface CategoriesMapper {
 
     ArrayList<Categories> list(List<Long> ids);
 
-    List<Categories> selectByPage();
+    List<Categories> selectByPage(CategoriesDto categoriesDto);
 }

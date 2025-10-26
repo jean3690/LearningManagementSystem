@@ -1,6 +1,7 @@
 package org.lms.service;
 
 
+import org.lms.dto.LessonsDto;
 import org.lms.entity.Lessons;
 import org.lms.response.Result;
 
@@ -13,7 +14,7 @@ import java.util.List;
 */
 public interface LessonsService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, LessonsDto lessonsDto);
 
     Result search(Lessons lessons);
 

@@ -22,7 +22,7 @@ public class CourseReviewsController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize){
-        return courseReviewsService.page(pageNum,pageSize);
+        return courseReviewsService.page(pageNum,pageSize, courseReviews);
     }
     @GetMapping("/search")
     @Operation(summary = "搜索")

@@ -2,6 +2,7 @@ package org.lms.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.lms.entity.LessonProgress;
 import org.lms.mapper.LessonProgressMapper;
 import org.lms.response.Result;
@@ -28,10 +29,10 @@ public class LessonProgressServiceImpl implements LessonProgressService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, LessonProgress lessonProgress) {
         PageHelper.startPage(pageNum,pageSize);
-        List<LessonProgress> lessonProgressList = lessonProgressMapper.findAll();
-        return Result.success(lessonProgressList);
+        List<LessonProgress> lessonProgressList = lessonProgressMapper.findAll(lessonProgress);
+        return Result.success(new PageInfo<>(lessonProgressList));
     }
 
     @Override

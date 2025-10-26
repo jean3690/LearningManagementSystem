@@ -28,7 +28,7 @@ public interface InvoicesMapper {
 
     int updateByPrimaryKey(Invoices record);
 
-    List<Invoices> findAll();
+    List<Invoices> findAll(InvoicesDto invoicesDto);
 
     List<Invoices> search(InvoicesDto invoicesDto);
 }

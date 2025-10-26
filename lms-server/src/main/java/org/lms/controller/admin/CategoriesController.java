@@ -87,8 +87,10 @@ public class CategoriesController {
      */
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result pageQuery(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return categoriesService.pageQuery(pageNum,pageSize);
+    public Result pageQuery(@PathVariable("pageNum") Integer pageNum,
+                            @PathVariable("pageSize") Integer pageSize,
+                            @RequestBody CategoriesDto categoriesDto){
+        return categoriesService.pageQuery(pageNum,pageSize,categoriesDto);
     }
 
 }

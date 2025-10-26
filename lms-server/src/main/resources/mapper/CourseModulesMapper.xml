@@ -40,6 +40,14 @@
         SELECT
         <include refid="Base_Column_List"></include>
         FROM course_modules
+        <where>
+            <if test="courseId!=null">
+                and course_id = #{courseId}
+            </if>
+            <if test="title!=null and title!=''">
+                and title = #{title}
+            </if>
+        </where>
         order by sort_order asc
     </select>
     <select id="search" resultType="org.lms.entity.CourseModules">

@@ -3,6 +3,7 @@ package org.lms.mapper;
 
 import org.lms.Enum.OpreationType;
 import org.lms.annotation.AutoFill;
+import org.lms.dto.UsersDto;
 import org.lms.entity.Users;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface UsersMapper {
 
     Users findByUsername(String username);
 
-    List<Users> queryAll();
+    List<Users> queryAll(UsersDto usersDto);
 
     List<Users> queryList(List<Long> ids);
 

@@ -31,7 +31,7 @@ public interface CourseReviewsMapper {
 
     List<CourseReviews> list(@Param("ids") List<Long> list);
 
-    List<CourseReviews> findAll();
+    List<CourseReviews> findAll(CourseReviews courseReviews);
 
     List<CourseReviews> search(CourseModulesDto courseModulesDto);
 

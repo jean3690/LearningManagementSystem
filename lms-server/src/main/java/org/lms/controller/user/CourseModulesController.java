@@ -23,7 +23,7 @@ public class CourseModulesController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize){
-        return courseModulesService.page(pageNum,pageSize);
+        return courseModulesService.page(pageNum,pageSize, courseModulesDto);
     }
     @GetMapping("/search")
     @Operation(summary = "搜索")

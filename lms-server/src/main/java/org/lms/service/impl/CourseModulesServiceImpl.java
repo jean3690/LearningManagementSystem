@@ -38,9 +38,9 @@ public class CourseModulesServiceImpl implements CourseModulesService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, CourseModulesDto courseModulesDto) {
         PageHelper.startPage(pageNum,pageSize);
-        List<CourseModules> courseModulesList = courseModulesMapper.findAll();
+        List<CourseModules> courseModulesList = courseModulesMapper.findAll(courseModulesDto);
         return Result.success(new PageInfo<>(courseModulesList));
     }
 

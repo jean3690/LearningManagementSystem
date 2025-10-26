@@ -28,7 +28,7 @@ public interface EnrollmentsMapper {
 
     List<Enrollments> list(@Param("ids") List<Long> list);
 
-    List<Enrollments> findAll();
+    List<Enrollments> findAll(Enrollments enrollments);
 
     List<Enrollments> search(Enrollments enrollments);
 

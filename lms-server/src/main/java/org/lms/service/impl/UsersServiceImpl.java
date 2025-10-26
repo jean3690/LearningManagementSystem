@@ -123,9 +123,9 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Result pageQuery(Integer pageNum, Integer pageSize) {
+    public Result pageQuery(Integer pageNum, Integer pageSize, UsersDto usersDto) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Users> usersList = usersMapper.queryAll();
+        List<Users> usersList = usersMapper.queryAll(usersDto);
         return Result.success(new PageInfo<Users>(usersList));
     }
     @Override

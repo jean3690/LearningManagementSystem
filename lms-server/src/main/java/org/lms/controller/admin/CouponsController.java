@@ -21,18 +21,15 @@ public class CouponsController {
 
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return couponsService.page(pageNum,pageSize);
+    public Result page(@PathVariable("pageNum") Integer pageNum,
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody CouponsDto couponsDto){
+        return couponsService.page(pageNum,pageSize,couponsDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询优惠卷")
     public Result queryById(@PathVariable("id") Long id){
         return couponsService.queryById(id);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "查询优惠卷")
-    public Result serach(@RequestBody CouponsDto couponsDto){
-        return couponsService.search(couponsDto);
     }
     @PostMapping("/add")
     @Operation(summary = "添加优惠卷")

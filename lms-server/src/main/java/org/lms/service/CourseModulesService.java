@@ -2,7 +2,6 @@ package org.lms.service;
 
 
 import org.lms.dto.CourseModulesDto;
-import org.lms.entity.CourseModules;
 import org.lms.response.Result;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 */
 public interface CourseModulesService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, CourseModulesDto courseModulesDto);
 
     Result search(CourseModulesDto courseModulesDto);
 

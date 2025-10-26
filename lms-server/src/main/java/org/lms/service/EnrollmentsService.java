@@ -13,7 +13,7 @@ import java.util.List;
 */
 public interface EnrollmentsService {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, Enrollments enrollments);
 
     Result search(Enrollments enrollments);
 

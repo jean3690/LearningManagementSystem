@@ -10,7 +10,6 @@ import org.lms.response.Result;
 import org.lms.service.CourseReviewsService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -30,9 +29,9 @@ public class CourseReviewsServiceImpl implements CourseReviewsService {
     }
 
     @Override
-    public Result page(Integer pageNum, Integer pageSize) {
+    public Result page(Integer pageNum, Integer pageSize, CourseReviews courseReviews) {
         PageHelper.startPage(pageNum,pageSize);
-        List<CourseReviews> courseReviewsList = courseReviewsMapper.findAll();
+        List<CourseReviews> courseReviewsList = courseReviewsMapper.findAll(courseReviews);
         return Result.success(new PageInfo<>(courseReviewsList));
     }
 

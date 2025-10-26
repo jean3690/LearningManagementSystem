@@ -14,7 +14,7 @@ import java.util.List;
 */
 public interface CourseReviewsService  {
 
-    Result page(Integer pageNum, Integer pageSize);
+    Result page(Integer pageNum, Integer pageSize, CourseReviews courseReviews);
 
     Result search(CourseModulesDto courseModulesDto);
 
