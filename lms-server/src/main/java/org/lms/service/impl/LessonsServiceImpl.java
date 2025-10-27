@@ -24,10 +24,10 @@ import java.util.List;
 */
 @Service
 public class LessonsServiceImpl implements LessonsService {
-    private LessonsMapper lessonsMapper;
-    private CourseModulesMapper courseModulesMapper;
-    private LessonProgressMapper lessonProgressMapper;
-    private StringRedisTemplate stringRedisTemplate;
+    private final LessonsMapper lessonsMapper;
+    private final CourseModulesMapper courseModulesMapper;
+    private final LessonProgressMapper lessonProgressMapper;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public LessonsServiceImpl(LessonsMapper lessonsMapper, CourseModulesMapper courseModulesMapper, LessonProgressMapper lessonProgressMapper, StringRedisTemplate stringRedisTemplate) {
         this.lessonsMapper = lessonsMapper;

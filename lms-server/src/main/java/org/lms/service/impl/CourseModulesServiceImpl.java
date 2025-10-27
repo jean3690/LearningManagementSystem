@@ -25,10 +25,10 @@ import java.util.List;
 */
 @Service
 public class CourseModulesServiceImpl implements CourseModulesService {
-    private CourseModulesMapper courseModulesMapper;
-    private CoursesMapper coursesMapper;
-    private LessonsMapper lessonsMapper;
-    private TransactionTemplate transactionTemplate;
+    private final CourseModulesMapper courseModulesMapper;
+    private final CoursesMapper coursesMapper;
+    private final LessonsMapper lessonsMapper;
+    private final TransactionTemplate transactionTemplate;
 
     public CourseModulesServiceImpl(CourseModulesMapper courseModulesMapper, CoursesMapper coursesMapper, LessonsMapper lessonsMapper, TransactionTemplate transactionTemplate) {
         this.courseModulesMapper = courseModulesMapper;

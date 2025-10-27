@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "课程课时内容管理")
 public class LessonController {
-    private LessonsService lessonsService;
+    private final LessonsService lessonsService;
 
     public LessonController(LessonsService lessonsService) {
         this.lessonsService = lessonsService;

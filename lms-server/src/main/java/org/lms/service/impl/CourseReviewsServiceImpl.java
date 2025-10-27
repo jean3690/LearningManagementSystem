@@ -20,8 +20,8 @@ import java.util.List;
 */
 @Service
 public class CourseReviewsServiceImpl implements CourseReviewsService {
-    private CourseReviewsMapper courseReviewsMapper;
-    private StringRedisTemplate stringRedisTemplate;
+    private final CourseReviewsMapper courseReviewsMapper;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public CourseReviewsServiceImpl(CourseReviewsMapper courseReviewsMapper, StringRedisTemplate stringRedisTemplate) {
         this.courseReviewsMapper = courseReviewsMapper;

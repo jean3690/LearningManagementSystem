@@ -36,11 +36,11 @@ import java.util.stream.Collectors;
 */
 @Service
 public class OrdersServiceImpl implements OrdersService {
-    private OrdersMapper ordersMapper;
-    private OrderItemsMapper orderItemsMapper;
-    private StringRedisTemplate stringRedisTemplate;
-    private CoursesMapper coursesMapper;
-    private TransactionTemplate transactionTemplate;
+    private final OrdersMapper ordersMapper;
+    private final OrderItemsMapper orderItemsMapper;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final CoursesMapper coursesMapper;
+    private final TransactionTemplate transactionTemplate;
 
     public OrdersServiceImpl(OrdersMapper ordersMapper,
                              OrderItemsMapper orderItemsMapper,

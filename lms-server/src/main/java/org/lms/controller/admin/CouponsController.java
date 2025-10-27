@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/admin/coupons")
 @Tag(name = "优惠卷管理")
 public class CouponsController {
-    private CouponsService couponsService;
+    private final CouponsService couponsService;
 
     public CouponsController(CouponsService couponsService) {
         this.couponsService = couponsService;

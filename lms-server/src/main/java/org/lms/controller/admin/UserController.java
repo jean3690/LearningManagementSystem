@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/admin/user")
 @Tag(name = "用户管理接口")
 public class UserController {
-    private UsersService usersService;
+    private final UsersService usersService;
 
     public UserController(UsersService usersService) {
         this.usersService = usersService;

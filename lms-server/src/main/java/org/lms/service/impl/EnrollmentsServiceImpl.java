@@ -91,7 +91,7 @@ public class EnrollmentsServiceImpl implements EnrollmentsService {
         if(lessonProgressList!=null&&!lessonProgressList.isEmpty()){
             return Result.error();
         }
-        int count = enrollmentsMapper.deleteBatch(ids);
+        enrollmentsMapper.deleteBatch(ids);
         return Result.success();
     }
 }

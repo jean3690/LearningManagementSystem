@@ -30,9 +30,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 public class InvoicesServiceImpl implements InvoicesService {
-    private InvoicesMapper invoicesMapper;
-    private OrdersMapper ordersMapper;
-    private RedisUtil redisUtil;
+    private final InvoicesMapper invoicesMapper;
+    private final OrdersMapper ordersMapper;
+    private final RedisUtil redisUtil;
     public InvoicesServiceImpl(InvoicesMapper invoicesMapper, OrdersMapper ordersMapper,RedisUtil redisUtil) {
         this.invoicesMapper = invoicesMapper;
         this.ordersMapper = ordersMapper;

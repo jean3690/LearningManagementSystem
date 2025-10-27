@@ -24,16 +24,15 @@ import java.util.Optional;
  */
 @Service
 public class CoursesServiceImpl implements CoursesService {
-    private CoursesMapper coursesMapper;
-    private CategoriesMapper categoriesMapper;
-    //跟courses关联的对象
-    private CourseModulesMapper courseModulesMapper;
-    private CourseReviewsMapper courseReviewsMapper;
-    private EnrollmentsMapper enrollmentsMapper;
-    private OrderItemsMapper orderItemsMapper;
-    //
-    private TransactionTemplate transactionTemplate;
-    private StringRedisTemplate stringRedisTemplate;
+    private final CoursesMapper coursesMapper;
+    private final CategoriesMapper categoriesMapper;
+    //跟coures关联的对象
+    private final CourseModulesMapper courseModulesMapper;
+    private final CourseReviewsMapper courseReviewsMapper;
+    private final EnrollmentsMapper enrollmentsMapper;
+    private final OrderItemsMapper orderItemsMapper;
+    private final TransactionTemplate transactionTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public CoursesServiceImpl(CoursesMapper coursesMapper,
                               CategoriesMapper categoriesMapper,

@@ -22,9 +22,9 @@ import java.util.List;
 */
 @Service
 public class CouponsServiceImpl implements CouponsService {
-    private CouponsMapper couponsMapper;
-    private TransactionTemplate transactionTemplate;
-    private StringRedisTemplate stringRedisTemplate;
+    private final CouponsMapper couponsMapper;
+    private final TransactionTemplate transactionTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public CouponsServiceImpl(CouponsMapper couponsMapper, TransactionTemplate transactionTemplate, StringRedisTemplate stringRedisTemplate) {
         this.couponsMapper = couponsMapper;
@@ -49,13 +49,11 @@ public class CouponsServiceImpl implements CouponsService {
 
     @Override
     public Result update(CouponsDto couponsDto) {
-
         Coupons coupons = new Coupons();
         BeanUtils.copyProperties(couponsDto,coupons);
         transactionTemplate.execute(status -> {
             try {
-                int updateCount = couponsMapper.updateByPrimaryKeySelective(coupons);
-                return updateCount;
+                return couponsMapper.updateByPrimaryKeySelective(coupons);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "发票管理")
 public class InvoicesController {
-    private InvoicesService invoicesService;
+    private final InvoicesService invoicesService;
 
     public InvoicesController(InvoicesService invoicesService) {
         this.invoicesService = invoicesService;

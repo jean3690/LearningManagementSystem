@@ -31,10 +31,10 @@ import static org.lms.constant.RedisConstant.*;
 */
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
-    private CategoriesMapper categoriesMapper;
-    private StringRedisTemplate stringRedisTemplate;
-    private TransactionTemplate transactionTemplate;
-    private CoursesMapper coursesMapper;
+    private final CategoriesMapper categoriesMapper;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final TransactionTemplate transactionTemplate;
+    private final CoursesMapper coursesMapper;
 
     public CategoriesServiceImpl(CategoriesMapper categoriesMapper,
                                  StringRedisTemplate stringRedisTemplate,

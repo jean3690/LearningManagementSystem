@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "课程报名管理")
 public class EnrollmentsController {
-    private EnrollmentsService enrollmentsService;
+    private final EnrollmentsService enrollmentsService;
 
     public EnrollmentsController(EnrollmentsService enrollmentsService) {
         this.enrollmentsService = enrollmentsService;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "课时学习进度管理")
 public class LessonProgressController {
-    private LessonProgressService lessonProgressService;
+    private final LessonProgressService lessonProgressService;
 
     public LessonProgressController(LessonProgressService lessonProgressService) {
         this.lessonProgressService = lessonProgressService;

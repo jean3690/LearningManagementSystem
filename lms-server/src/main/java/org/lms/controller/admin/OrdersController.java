@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "订单管理")
 public class OrdersController {
-    private OrdersService ordersService;
+    private final OrdersService ordersService;
 
     public OrdersController(OrdersService ordersService) {
         this.ordersService = ordersService;

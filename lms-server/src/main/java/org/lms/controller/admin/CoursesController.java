@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/admin/courses")
 @Tag(name = "课程基本信息管理")
 public class CoursesController {
-    private CoursesService coursesService;
+    private final CoursesService coursesService;
 
     public CoursesController(CoursesService coursesService) {
         this.coursesService = coursesService;

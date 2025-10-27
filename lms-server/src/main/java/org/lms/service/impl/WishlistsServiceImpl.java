@@ -23,8 +23,8 @@ import java.util.List;
 @Service
 public class WishlistsServiceImpl  implements WishlistsService {
 
-    private WishlistsMapper wishlistsMapper;
-    private StringRedisTemplate stringRedisTemplate;
+    private final WishlistsMapper wishlistsMapper;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public WishlistsServiceImpl(WishlistsMapper wishlistsMapper, StringRedisTemplate stringRedisTemplate) {
         this.wishlistsMapper = wishlistsMapper;
