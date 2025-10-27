@@ -31,6 +31,11 @@ public class CourseModulesController {
     public Result add(@RequestBody CourseModulesDto courseModulesDto){
         return courseModulesService.add(courseModulesDto);
     }
+    @PutMapping("/update")
+    @Operation(summary = "修改课程模块")
+    public Result update(@RequestBody CourseModulesDto courseModulesDto){
+        return courseModulesService.update(courseModulesDto);
+    }
     @DeleteMapping("/delete")
     @Operation(summary = "删除课程模块")
     public Result delete(@RequestBody List<Long> ids){

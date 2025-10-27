@@ -3,6 +3,7 @@ package org.lms.controller.user;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.lms.dto.LessonsDto;
 import org.lms.entity.Lessons;
 import org.lms.response.Result;
 import org.lms.service.LessonsService;
@@ -15,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "课程课时内容管理")
 public class LessonController {
-    private LessonsService lessonsService;
+    private final LessonsService lessonsService;
 
     public LessonController(LessonsService lessonsService) {
         this.lessonsService = lessonsService;
@@ -23,13 +24,9 @@ public class LessonController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return lessonsService.page(pageNum,pageSize, lessonsDto);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody Lessons lessons){
-        return lessonsService.search(lessons);
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody LessonsDto lessonsDto){
+        return lessonsService.page(pageNum,pageSize,lessonsDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询")

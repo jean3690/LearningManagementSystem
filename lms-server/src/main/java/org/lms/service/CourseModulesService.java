@@ -15,9 +15,10 @@ public interface CourseModulesService {
 
     Result page(Integer pageNum, Integer pageSize, CourseModulesDto courseModulesDto);
 
-    Result search(CourseModulesDto courseModulesDto);
 
     Result add(CourseModulesDto courseModulesDto);
 
     Result delete(List<Long> ids);
+
+    Result update(CourseModulesDto courseModulesDto);
 }

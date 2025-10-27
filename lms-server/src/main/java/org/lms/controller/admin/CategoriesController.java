@@ -24,8 +24,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param id
-     * @return
      */
     @GetMapping("/{id}")
     @Operation(summary = "根据id查询")
@@ -35,8 +33,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param categoriesDto
-     * @return
      */
     @PostMapping("/add")
     @Operation(summary = "添加分类")
@@ -46,8 +42,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param categoriesDto
-     * @return
      */
     @PutMapping("/update")
     @Operation(summary = "修改分类")
@@ -58,8 +52,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param id
-     * @return
      */
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "删除分类")
@@ -69,8 +61,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param ids
-     * @return
      */
     @GetMapping("/list")
     @Operation(summary = "根据list里的id获得分类")
@@ -81,9 +71,6 @@ public class CategoriesController {
 
     /**
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
      */
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")

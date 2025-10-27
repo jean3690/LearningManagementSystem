@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { MessageUtil } from "../utils";
 import router from "../router";
 
 // 创建axios实例
@@ -81,11 +81,7 @@ instance.interceptors.response.use(
         // 处理特定业务错误
         if (code === 401) {
             // token过期或无效
-            ElMessageBox.confirm('您的登录状态已过期，请重新登录', '系统提示', {
-                confirmButtonText: '重新登录',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
+            MessageUtil.confirm('您的登录状态已过期，请重新登录', '系统提示', '重新登录', '取消', 'warning').then(() => {
                 localStorage.removeItem('token');
                 router.push('/login');
             });
@@ -96,7 +92,7 @@ instance.interceptors.response.use(
             return Promise.reject(new Error(message || '权限不足'));
         } else {
             // 其他业务错误
-            ElMessage.error(message || '请求失败');
+            MessageUtil.error(message || '请求失败');
             return Promise.reject(new Error(message || '请求失败'));
         }
     },
@@ -115,7 +111,7 @@ instance.interceptors.response.use(
         
         // 网络错误处理
         if (!error.response) {
-            ElMessage.error('网络连接失败，请检查网络设置');
+            MessageUtil.error('网络连接失败，请检查网络设置');
             return Promise.reject(error);
         }
         
@@ -156,7 +152,7 @@ instance.interceptors.response.use(
                 errorMessage = `请求失败 (${status})`;
         }
         
-        ElMessage.error(errorMessage);
+        MessageUtil.error(errorMessage);
         return Promise.reject(error);
     }
 );

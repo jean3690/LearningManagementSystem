@@ -3,7 +3,6 @@ package org.lms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.RandomUtils;
 import org.lms.dto.CategoriesDto;
 import org.lms.entity.Categories;
 import org.lms.entity.Courses;
@@ -20,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import static org.lms.constant.RedisConstant.*;
@@ -126,7 +126,7 @@ public class CategoriesServiceImpl implements CategoriesService {
                 map.put(String.valueOf(categories.getId()),JsonUtil.toJson(categories));
             }
             stringRedisTemplate.opsForHash().putAll(CATEGORY_HASH_TOKEN,map);
-            stringRedisTemplate.expire(CATEGORY_HASH_TOKEN,RandomUtils.nextInt(40,50),TimeUnit.MINUTES);
+            stringRedisTemplate.expire(CATEGORY_HASH_TOKEN, ThreadLocalRandom.current().nextInt(10,30), TimeUnit.MINUTES);
         }
         return categoriesList;
     }
@@ -138,7 +138,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         }
         PageHelper.startPage(pageNum, pageSize);
         List<Categories> categoriesList = categoriesMapper.selectByPage(categoriesDto);
-        return Result.success(new PageInfo<Categories>(categoriesList));
+        return Result.success(new PageInfo<>(categoriesList));
     }
 }
 

@@ -19,7 +19,6 @@ public interface CoursesService  {
 
     Result add(CoursesDto coursesDto);
 
-    Result search(CoursesDto coursesDto);
 
     Result update(CoursesDto coursesDto);
 

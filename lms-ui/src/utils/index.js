@@ -3,6 +3,7 @@ import StorageUtils from './storage';
 import ValidateUtils from './validate';
 import StringUtils from './string';
 import ArrayUtils from './array';
+import MessageUtil from './message';
 
 /**
  * 工具类集合
@@ -13,7 +14,8 @@ const utils = {
   storage: StorageUtils,
   validate: ValidateUtils,
   string: StringUtils,
-  array: ArrayUtils
+  array: ArrayUtils,
+  message: MessageUtil
 };
 
 export default utils;
@@ -21,4 +23,4 @@ export default utils;
 /**
  * 按需导出各个工具类
  */
-export { DateUtils, StorageUtils, ValidateUtils, StringUtils, ArrayUtils };
+export { DateUtils, StorageUtils, ValidateUtils, StringUtils, ArrayUtils, MessageUtil };

@@ -26,4 +26,5 @@ public class RedisConstant {
     public static final String USERS_ID = "users:id:";
     public static final String ORDERS_PAGE = "orders:page:";
     public static final String ORDERS_ID = "orders:id:";
+    public static final String ORDERS_DETAIL_PAGE = "orders:details:page:";
 }

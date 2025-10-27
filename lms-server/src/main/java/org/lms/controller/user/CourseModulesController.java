@@ -22,13 +22,9 @@ public class CourseModulesController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return courseModulesService.page(pageNum,pageSize, courseModulesDto);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody CourseModulesDto courseModulesDto){
-        return courseModulesService.search(courseModulesDto);
+                       @PathVariable("pageSize") Integer pageSize,
+                        @RequestBody CourseModulesDto courseModulesDto){
+        return courseModulesService.page(pageNum,pageSize,courseModulesDto);
     }
     @PostMapping("/add")
     @Operation(summary = "添加课程模块")

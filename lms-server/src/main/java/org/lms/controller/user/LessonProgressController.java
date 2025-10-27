@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "课时学习进度管理")
 public class LessonProgressController {
-    private LessonProgressService lessonProgressService;
+    private final LessonProgressService lessonProgressService;
 
     public LessonProgressController(LessonProgressService lessonProgressService) {
         this.lessonProgressService = lessonProgressService;
@@ -21,12 +21,13 @@ public class LessonProgressController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return lessonProgressService.page(pageNum,pageSize, lessonProgress);
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody LessonProgress lessonProgress){
+        return lessonProgressService.page(pageNum,pageSize,lessonProgress);
     }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody LessonProgress lessonProgress){
-        return lessonProgressService.search(lessonProgress);
+    @PostMapping
+    @Operation(summary = "添加")
+    public Result add(@RequestBody LessonProgress lessonProgress){
+        return lessonProgressService.add(lessonProgress);
     }
 }

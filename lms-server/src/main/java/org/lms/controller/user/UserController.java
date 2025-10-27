@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/user/user")
 @Tag(name = "用户管理接口")
 public class UserController {
-    private UsersService usersService;
+    private final UsersService usersService;
 
     public UserController(UsersService usersService) {
         this.usersService = usersService;
@@ -43,6 +43,7 @@ public class UserController {
     @PostMapping("/add")
     @Operation(summary = "添加用户")
     public Result add(@RequestBody UsersDto usersDto){
+        log.info("{}",usersDto);
         return usersService.addUser(usersDto);
     }
 
@@ -76,8 +77,10 @@ public class UserController {
      */
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return usersService.pageQuery(pageNum,pageSize, usersDto);
+    public Result page(@PathVariable("pageNum") Integer pageNum,
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody UsersDto usersDto){
+        return usersService.pageQuery(pageNum,pageSize,usersDto);
     }
 
     /**

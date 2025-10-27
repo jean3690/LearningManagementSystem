@@ -1,8 +1,33 @@
 import request from "@/network/request"
 import { commonPath } from "./requestPath"
-export const courseModulesPageQuery = (pageNum, pageSize) => {
-    return request({
+export const courseModulePage = async (pageQuery) => {
+    return await request({
         method: "get",
-        url: `${commonPath}/page/${pageNum}/${pageSize}`
+        url: `${commonPath}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
+        data: pageQuery.courseModule
+    })
+}
+
+export const courseModuleAdd = async (courseModule) => {
+    return await request({
+        method: "post",
+        url: `${commonPath}/add`,
+        data: courseModule
+    })
+}
+
+export const courseModuleUpdate = async (courseModule) => {
+    return await request({
+        method: "put",
+        url: `${commonPath}/update`,
+        data: courseModule
+    })
+}
+
+export const courseModuleDelete = async (ids) => {
+    return await request({
+        method: "delete",
+        url: `${commonPath}/delete`,
+        data: ids
     })
 }

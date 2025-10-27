@@ -4,11 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.lms.Context.UserContextHolder;
 import org.lms.dto.UsersDto;
 import org.lms.dto.UsersUpdateDto;
-import org.lms.entity.Users;
-import org.lms.mapper.UsersMapper;
 import org.lms.response.Result;
 import org.lms.service.UsersService;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +25,6 @@ public class UserController {
 
     /**
      *
-     * @param usersDto
-     * @param httpSession
-     * @return
      */
     @GetMapping("/login")
     @Operation(summary = "登录")
@@ -40,8 +34,6 @@ public class UserController {
 
     /**
      *
-     * @param usersDto
-     * @return
      */
     @PostMapping("/add")
     @Operation(summary = "添加用户")
@@ -52,8 +44,7 @@ public class UserController {
 
     /**
      *
-     * @param updateDto
-     * @return
+     *
      */
     @PutMapping("/update")
     @Operation(summary = "修改用户")
@@ -63,8 +54,7 @@ public class UserController {
 
     /**
      *
-     * @param token
-     * @return
+     *
      */
     @GetMapping("/logout")
     @Operation(summary = "退出")
@@ -74,9 +64,7 @@ public class UserController {
 
     /**
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
+     *
      */
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
@@ -88,8 +76,7 @@ public class UserController {
 
     /**
      *
-     * @param id
-     * @return
+     *
      */
     @GetMapping("/{id}")
     @Operation(summary = "根据id查询用户")
@@ -99,8 +86,7 @@ public class UserController {
 
     /**
      *
-     * @param ids
-     * @return
+     *
      */
     @GetMapping("/list")
     @Operation(summary = "根据list查询用户集合")
@@ -110,8 +96,7 @@ public class UserController {
 
     /**
      *
-     * @param ids
-     * @return
+     *
      */
     @DeleteMapping("/delete")
     @Operation(summary = "删除用户")

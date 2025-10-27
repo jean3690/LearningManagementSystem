@@ -16,7 +16,6 @@ public interface CourseReviewsService  {
 
     Result page(Integer pageNum, Integer pageSize, CourseReviews courseReviews);
 
-    Result search(CourseModulesDto courseModulesDto);
-
     Result delete(List<Long> ids);
+    Result add(CourseReviews courseReviews);
 }

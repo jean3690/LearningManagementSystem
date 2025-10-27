@@ -2,7 +2,6 @@ package org.lms.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.lms.dto.CourseModulesDto;
 import org.lms.entity.CourseReviews;
 import org.lms.response.Result;
 import org.lms.service.CourseReviewsService;

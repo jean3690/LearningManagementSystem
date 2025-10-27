@@ -15,9 +15,9 @@ public interface EnrollmentsService {
 
     Result page(Integer pageNum, Integer pageSize, Enrollments enrollments);
 
-    Result search(Enrollments enrollments);
 
     Result update(Enrollments enrollments);
 
     Result delete(List<Long> ids);
+    Result add(Enrollments enrollments);
 }

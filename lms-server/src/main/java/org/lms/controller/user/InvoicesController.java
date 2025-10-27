@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "发票管理")
 public class InvoicesController {
-    private InvoicesService invoicesService;
+    private final InvoicesService invoicesService;
 
     public InvoicesController(InvoicesService invoicesService) {
         this.invoicesService = invoicesService;
@@ -21,18 +21,15 @@ public class InvoicesController {
 
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,@PathVariable("pageSize") Integer pageSize){
-        return invoicesService.page(pageNum,pageSize, invoicesDto);
+    public Result page(@PathVariable("pageNum") Integer pageNum,
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody InvoicesDto invoicesDto){
+        return invoicesService.page(pageNum,pageSize,invoicesDto);
     }
     @GetMapping("/query/{id}")
     @Operation(summary = "根据id查询发票")
     public Result queryById(@PathVariable("id") Long id){
         return invoicesService.queryById(id);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody InvoicesDto invoicesDto){
-        return invoicesService.search(invoicesDto);
     }
     @PostMapping("/add")
     @Operation(summary = "添加发票")

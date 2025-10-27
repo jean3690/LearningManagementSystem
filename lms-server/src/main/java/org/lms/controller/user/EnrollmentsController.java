@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "课程报名管理")
 public class EnrollmentsController {
-    private EnrollmentsService enrollmentsService;
+    private final EnrollmentsService enrollmentsService;
 
     public EnrollmentsController(EnrollmentsService enrollmentsService) {
         this.enrollmentsService = enrollmentsService;
@@ -23,13 +23,9 @@ public class EnrollmentsController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize){
-        return enrollmentsService.page(pageNum,pageSize, enrollments);
-    }
-    @GetMapping("/search")
-    @Operation(summary = "搜索")
-    public Result search(@RequestBody Enrollments enrollments){
-        return enrollmentsService.search(enrollments);
+                       @PathVariable("pageSize") Integer pageSize,
+                       @RequestBody Enrollments enrollments){
+        return enrollmentsService.page(pageNum,pageSize,enrollments);
     }
     @PutMapping("/update")
     @Operation(summary = "修改课程报名")
@@ -40,5 +36,10 @@ public class EnrollmentsController {
     @Operation(summary = "删除课程报名")
     public Result delete(@RequestBody List<Long> ids){
         return enrollmentsService.delete(ids);
+    }
+    @PostMapping("/add")
+    @Operation(summary = "添加课程报名")
+    public Result add(@RequestBody Enrollments enrollments){
+        return enrollmentsService.add(enrollments);
     }
 }

@@ -3,19 +3,29 @@ package org.lms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.lms.constant.RedisConstant;
 import org.lms.dto.LessonsDto;
 import org.lms.entity.CourseModules;
 import org.lms.entity.Lessons;
+import org.lms.event.CommonRedisCacheClearEvent;
 import org.lms.mapper.CourseModulesMapper;
 import org.lms.mapper.LessonProgressMapper;
 import org.lms.mapper.LessonsMapper;
 import org.lms.response.Result;
 import org.lms.service.LessonsService;
+import org.lms.utils.JsonUtil;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.ObjectUtils;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
 * @author jeang
@@ -28,25 +38,43 @@ public class LessonsServiceImpl implements LessonsService {
     private final CourseModulesMapper courseModulesMapper;
     private final LessonProgressMapper lessonProgressMapper;
     private final StringRedisTemplate stringRedisTemplate;
-
-    public LessonsServiceImpl(LessonsMapper lessonsMapper, CourseModulesMapper courseModulesMapper, LessonProgressMapper lessonProgressMapper, StringRedisTemplate stringRedisTemplate) {
+    private final ApplicationEventPublisher eventPublisher;
+    public LessonsServiceImpl(LessonsMapper lessonsMapper, CourseModulesMapper courseModulesMapper, LessonProgressMapper lessonProgressMapper, StringRedisTemplate stringRedisTemplate, ApplicationEventPublisher eventPublisher) {
         this.lessonsMapper = lessonsMapper;
         this.courseModulesMapper = courseModulesMapper;
         this.lessonProgressMapper = lessonProgressMapper;
         this.stringRedisTemplate = stringRedisTemplate;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
     public Result page(Integer pageNum, Integer pageSize, LessonsDto lessonsDto) {
+        String key;
+        if(ObjectUtils.isEmpty(lessonsDto)){
+            key = RedisConstant.LESSONS_PAGE + pageNum+":"+pageSize;
+        }else {
+            String hash = DigestUtils.md5DigestAsHex(JsonUtil.toJson(lessonsDto).getBytes());
+            key = RedisConstant.LESSONS_PAGE + pageNum+":"+pageSize+":"+hash;
+        }
+        String json = stringRedisTemplate.opsForValue().get(key);
+        if(json!=null){
+            if(json.equals("_NULL_")){
+                return Result.success(new PageInfo<>(Collections.emptyList()));
+            }
+            List<Lessons> lessonsList = JsonUtil.jsonToObj(json,List.class,Lessons.class);
+            if (Optional.ofNullable(lessonsList).isEmpty()) {
+                return Result.success(new PageInfo<>(Collections.emptyList()));
+            }
+            return Result.success(new PageInfo<>(lessonsList));
+        }
         PageHelper.startPage(pageNum,pageSize);
         List<Lessons> lessonsList = lessonsMapper.findAll(lessonsDto);
+        if (ObjectUtils.isEmpty(lessonsList)) {
+            stringRedisTemplate.opsForValue().set(key,"_NULL_", ThreadLocalRandom.current().nextInt(10,30), TimeUnit.MINUTES);
+            return Result.success(Collections.emptyList());
+        }
+        stringRedisTemplate.opsForValue().set(key,JsonUtil.toJson(lessonsList), ThreadLocalRandom.current().nextInt(10,30), TimeUnit.MINUTES);
         return Result.success(new PageInfo<>(lessonsList));
-    }
-
-    @Override
-    public Result search(Lessons lessons) {
-        List<Lessons> lessonsList = lessonsMapper.search(lessons);
-        return Result.success(lessonsList);
     }
 
     @Override
@@ -61,7 +89,8 @@ public class LessonsServiceImpl implements LessonsService {
         if(courseModules==null){
             return Result.error();
         }
-        int i = lessonsMapper.insertSelective(lessons);
+        lessonsMapper.insertSelective(lessons);
+        clearPageCache();
         return Result.success();
     }
 
@@ -72,16 +101,22 @@ public class LessonsServiceImpl implements LessonsService {
         if(courseModules==null){
             return Result.error();
         }
-        int update = lessonsMapper.updateByPrimaryKeySelective(lessons);
+        lessonsMapper.updateByPrimaryKeySelective(lessons);
+        clearPageCache();
         return Result.success();
     }
 
     @Override
     @Transactional
     public Result delete(List<Long> ids) {
-        int count1 =  lessonProgressMapper.deleteBatch(ids);
-        int count = lessonsMapper.deleteBatch(ids);
+        lessonProgressMapper.deleteBatch(ids);
+        lessonsMapper.deleteBatch(ids);
+        clearPageCache();
         return Result.success();
+    }
+    private void clearPageCache() {
+        String prefix = RedisConstant.LESSONS_PAGE;
+        eventPublisher.publishEvent(new CommonRedisCacheClearEvent(prefix));
     }
 }
 

@@ -1,5 +1,6 @@
 package org.lms.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 @Component
+@Slf4j
 public class RedisUtil {
 
     private final RedisTemplate<String, Object> redisTemplate;
@@ -90,9 +92,10 @@ public class RedisUtil {
             }
             if (!CollectionUtils.isEmpty(keys)) {
                 stringRedisTemplate.delete(keys);
+                log.info("清除缓存数据:{}",keys.size());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 

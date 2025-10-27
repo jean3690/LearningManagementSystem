@@ -22,6 +22,4 @@ public interface CouponsService {
     Result delete(List<Long> ids);
 
     Result queryById(Long id);
-
-    Result search(CouponsDto couponsDto);
 }

@@ -16,8 +16,6 @@ public interface LessonsService {
 
     Result page(Integer pageNum, Integer pageSize, LessonsDto lessonsDto);
 
-    Result search(Lessons lessons);
-
     Result queryById(Long id);
 
     Result add(Lessons lessons);
