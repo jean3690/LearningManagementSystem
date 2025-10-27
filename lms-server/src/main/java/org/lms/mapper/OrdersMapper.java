@@ -1,6 +1,7 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.dto.OrdersDto;
 import org.lms.entity.Orders;
 import org.lms.vo.OrdersDetails;
@@ -30,4 +31,6 @@ public interface OrdersMapper {
     List<OrdersDetails> details(OrdersDto ordersDto);
 
     List<OrdersDetails> search(Orders orders);
+
+    int deleteBatch(@Param("idList") List<Long> idList);
 }

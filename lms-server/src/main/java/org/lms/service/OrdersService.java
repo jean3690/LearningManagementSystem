@@ -17,7 +17,6 @@ public interface OrdersService  {
 
     Result page(Integer pageNum, Integer pageSize, OrdersDto ordersDto);
 
-    Result search(Orders orders);
 
     Result add(OrdersDetails ordersDetails);
 

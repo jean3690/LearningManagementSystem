@@ -29,4 +29,8 @@ public interface OrderItemsMapper {
     List<OrderItems> list(@Param("ids") List<Long> ids);
 
     int insertBatch(List<OrderItems> orderItemsList);
+
+    int deleteBatch(@Param("itemIdList") List<Long> itemIdList);
+
+    int deleteByOrderIdBatch(@Param("idList") List<Long> idList);
 }

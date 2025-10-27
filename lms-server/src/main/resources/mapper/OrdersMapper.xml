@@ -172,6 +172,13 @@
         delete from orders
         where  id = #{id} 
     </delete>
+    <delete id="deleteBatch">
+        delete from orders
+        where id in
+        <foreach collection="idList" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.Orders" useGeneratedKeys="true">
         insert into orders
         ( id,order_number,user_id,total_amount,discount_amount,tax_amount,

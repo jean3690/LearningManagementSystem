@@ -7,6 +7,7 @@ import org.lms.dto.OrdersDto;
 import org.lms.entity.Courses;
 import org.lms.entity.OrderItems;
 import org.lms.entity.Orders;
+import org.lms.exception.deleteFailException;
 import org.lms.mapper.CoursesMapper;
 import org.lms.mapper.OrderItemsMapper;
 import org.lms.mapper.OrdersMapper;
@@ -16,6 +17,7 @@ import org.lms.vo.OrdersDetails;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.ObjectUtils;
 
@@ -60,12 +62,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Result search(Orders orders) {
-        List<OrdersDetails> ordersDetailsList = ordersMapper.search(orders);
-        return Result.success(ordersDetailsList);
-    }
-
-    @Override
+    @Transactional
     public Result add(OrdersDetails ordersDetails) {
         if(ObjectUtils.isEmpty(ordersDetails)){
             return Result.success();
@@ -108,12 +105,57 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Result update(OrdersDetails ordersDetails) {
-        return null;
+        if (ObjectUtils.isEmpty(ordersDetails)) {
+            return Result.success();
+        }
+        transactionTemplate.execute(status -> {
+            try {
+                if(!ObjectUtils.isEmpty(ordersDetails)){
+                    List<Long> courseIds = new ArrayList<>();
+                    List<OrderItems> orderItemsList = ordersDetails.getOrderItemsList();
+                    for (OrderItems orderItems : orderItemsList) {
+                        if(!ObjectUtils.isEmpty(orderItems.getCourseId())){
+                            Long courseId = orderItems.getCourseId();
+                            courseIds.add(courseId);
+                        }
+                    }
+                    List<Courses> coursesList = coursesMapper.list(courseIds);
+                    Map<Long, Courses> map = coursesList.stream().collect(Collectors.toMap(Courses::getId, Function.identity()));
+                    List<Courses> list = courseIds.stream().map(map::get).filter(Objects::nonNull).toList();
+                    if(list.size()!=orderItemsList.size()){
+                        throw new RuntimeException("有不存在的courseId");
+                    }
+                    List<Long> itemIdList = orderItemsList.stream().map(OrderItems::getId).filter(Objects::nonNull).toList();
+                    if(itemIdList.size()!=orderItemsList.size()){
+                        throw new RuntimeException("有id为null");
+                    }
+                    orderItemsMapper.deleteBatch(itemIdList);
+                    orderItemsMapper.insertBatch(orderItemsList);
+                }
+                Orders orders = new Orders();
+                BeanUtils.copyProperties(ordersDetails,orders);
+                ordersMapper.updateByPrimaryKeySelective(orders);
+                return 1;
+            }catch (Exception e){
+                status.setRollbackOnly();
+                throw new RuntimeException(e.getCause());
+            }
+        });
+        return Result.success();
     }
 
     @Override
     public Result delete(List<Long> idList) {
-        return null;
+        transactionTemplate.execute(status -> {
+          try {
+              orderItemsMapper.deleteByOrderIdBatch(idList);
+              ordersMapper.deleteBatch(idList);
+              return 1;
+          }catch (Exception e){
+              throw new deleteFailException("删除失败");
+          }
+        });
+        return Result.success();
     }
 }
 

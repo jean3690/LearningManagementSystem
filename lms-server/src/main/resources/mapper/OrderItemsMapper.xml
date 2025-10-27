@@ -41,6 +41,20 @@
         delete from order_items
         where  id = #{id} 
     </delete>
+    <delete id="deleteBatch">
+        delete from order_items
+        where id in
+        <foreach collection="itemIdList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByOrderIdBatch">
+        delete from order_items
+        where order_id in
+        <foreach collection="idList" item="orderId" open="(" close=")" separator=",">
+            #{orderId}
+        </foreach>
+    </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.lms.entity.OrderItems" useGeneratedKeys="true">
         insert into order_items
         ( id,order_id,course_id,unit_price,discount_amount,final_price,
