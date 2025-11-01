@@ -22,7 +22,7 @@ public class LessonProgressController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody LessonProgress lessonProgress){
+                       @ModelAttribute LessonProgress lessonProgress){
         return lessonProgressService.page(pageNum,pageSize,lessonProgress);
     }
 }

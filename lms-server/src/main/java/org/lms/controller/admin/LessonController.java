@@ -25,7 +25,7 @@ public class LessonController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody LessonsDto lessonsDto){
+                       @ModelAttribute LessonsDto lessonsDto){
         return lessonsService.page(pageNum,pageSize,lessonsDto);
     }
     @GetMapping("/query/{id}")
@@ -43,7 +43,7 @@ public class LessonController {
     public Result update(@RequestBody Lessons lessons){
         return lessonsService.update(lessons);
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除课程课时内容")
     public Result delete(@RequestBody List<Long> ids){
         return lessonsService.delete(ids);

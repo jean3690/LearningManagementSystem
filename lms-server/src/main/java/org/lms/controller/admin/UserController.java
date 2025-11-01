@@ -28,7 +28,7 @@ public class UserController {
      */
     @GetMapping("/login")
     @Operation(summary = "登录")
-    public Result login(@RequestBody UsersDto usersDto, HttpSession httpSession){
+    public Result login(@ModelAttribute UsersDto usersDto, HttpSession httpSession){
         return usersService.login(usersDto,httpSession);
     }
 
@@ -70,7 +70,7 @@ public class UserController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody UsersDto usersDto){
+                       @ModelAttribute UsersDto usersDto){
         return usersService.pageQuery(pageNum,pageSize,usersDto);
     }
 
@@ -98,7 +98,7 @@ public class UserController {
      *
      *
      */
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除用户")
     public Result delete(@RequestBody List<Long> ids){
         return usersService.remove(ids);

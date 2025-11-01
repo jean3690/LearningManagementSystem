@@ -30,4 +30,9 @@ public class CourseReviewsController {
     public Result delete(@RequestBody List<Long> ids){
         return courseReviewsService.delete(ids);
     }
+    @PostMapping("/add")
+    @Operation(summary = "添加课程评价")
+    public Result add(@RequestBody CourseReviews courseReviews){
+        return courseReviewsService.add(courseReviews);
+    }
 }

@@ -38,4 +38,6 @@ public interface CoursesMapper {
     void deleteBatch(@Param("ids") List<Long> ids);
 
     List<Courses> list(List<Long> ids);
+
+    List<Courses> listByCategoryId(@Param("ids") List<Long> ids);
 }

@@ -23,7 +23,7 @@ public class CouponsController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody CouponsDto couponsDto){
+                       @ModelAttribute CouponsDto couponsDto){
         return couponsService.page(pageNum,pageSize,couponsDto);
     }
     @GetMapping("/query/{id}")
@@ -41,7 +41,7 @@ public class CouponsController {
     public Result update(@RequestBody CouponsDto couponsDto){
         return couponsService.update(couponsDto);
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除优惠卷")
     public Result delete(@RequestBody List<Long> ids){
         return couponsService.delete(ids);

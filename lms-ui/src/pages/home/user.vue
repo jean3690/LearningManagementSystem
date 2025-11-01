@@ -59,14 +59,6 @@
         <el-table-column prop="email" align="center" label="邮箱" width="200" />
         <el-table-column prop="username" align="center" label="用户名" width="120" />
         <el-table-column prop="phone" align="center" label="手机号" width="150" />
-        <el-table-column prop="userType" align="center" label="用户类型" width="120" />
-        <el-table-column prop="accountType" align="center" label="账户类型" width="120" />
-        <el-table-column prop="emailVerified" align="center" label="邮箱验证" width="100"></el-table-column>
-        <el-table-column prop="isActive" align="center" label="是否激活" width="100">
-            <template #default="scope">
-            <el-switch v-model="scope.row.isActive" active-color="#13ce66" inactive-color="#ff4949" />
-            </template>
-        </el-table-column>
       <el-table-column label="操作" align="center" width="150">
         <template #default="scope">
           <el-button type="text" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -75,8 +67,8 @@
       </el-table-column>
     </el-table>
     <div class="flex justify-center">
-            <el-pagination v-model:current-page="pageQueryParam.page" v-model:page-size="pageQueryParam.pageSize"
-             background layout="prev, pager, next" :total="100" />
+            <el-pagination v-model:current-page="pageQueryParam.pageNum" v-model:page-size="pageQueryParam.pageSize"
+             background layout="prev, pager, next,jumper,->,total" v-model:total="pageQueryParam.total" />
         </div>
     <!-- 删除确认弹窗 -->
     <Dialog
@@ -84,12 +76,47 @@
       v-model:visible="dialogVisible"
       @confirm="confirmDelete"
     />
+    <el-dialog v-model="dialogAddVisible" title="添加用户" width="500px">
+      <el-form ref="form" :model="user" label-width="80px">
+        <el-form-item label="邮箱">
+          <el-input v-model="user.email" />
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="user.username" />
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="user.phone" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogAddVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveUser">确定</el-button>
+      </template>
+      </el-dialog>
+      <el-dialog v-model="dialogEditVisible" title="编辑用户" width="500px">
+      <el-form ref="form" :model="user" label-width="80px">
+        <el-form-item label="邮箱">
+          <el-input v-model="user.email" />
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="user.username" />
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="user.phone" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogEditVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveUser">确定</el-button>
+      </template>
+      </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref,watch,reactive } from 'vue';
+import { ref,watch,reactive, onMounted } from 'vue';
 import Dialog from '@/components/dialog/index.vue';
+import { userAdd, userDelete, userPage } from '../../api/user/user';
 // 查询参数
 const queryParam = ref({
     id: null,
@@ -97,27 +124,35 @@ const queryParam = ref({
     email: null,
     username: null,
     phone: null,
-    isActive: null,
 });
+const user = ref({
+  id: null,
+  uuid: null,
+  email: null,
+  username: null,
+  password: null,
+  phone: null,
+  token: null,
+})
 const pageQueryParam = reactive({
-    page: 1,
-    pageSize: 10
+    total: 0,
+    pageNum: 1,
+    pageSize: 10,
+    usersDto: user.value
 });
-
 // 表格数据（示例）
-const tableData = ref([
-  {
-        id: 1,
-        uuid: '1',
-        email: 'fds@qq.com',
-        username: 'admin',
-        phone: '12345678901',
-        userType: 'admin',
-        accountType: 'personal',
-        emailVerified: true,
-        isActive: true
-  }
-]);
+const tableData = ref([]);
+const pageQuery = () => {
+    userPage(pageQueryParam).then(res => { 
+        pageQueryParam.total = res.total;
+        pageQueryParam.pageNum = res.pageNum;
+        pageQueryParam.pageSize = res.pageSize;
+        tableData.value = res.list;
+    })
+}
+onMounted(() => {
+    pageQuery();
+})
 watch(pageQueryParam, () => {
    console.log('页码或页大小变化:', pageQueryParam); 
 }, { deep: true })
@@ -127,10 +162,13 @@ const selectedRows = ref([]);
 
 // 弹窗控制
 const dialogVisible = ref(false);
+const dialogAddVisible = ref(false);
+const dialogEditVisible = ref(false);
 const dialogTitle = ref('是否删除选中数据？');
 const deleteType = ref(''); // 'batch' | 'single'
 const currentIndex = ref(null);
-
+const currentEditIndex = ref(null);
+const ids = ref([]);
 // 监听选择变化
 const onSelectionChange = (val) => {
   selectedRows.value = val;
@@ -138,26 +176,45 @@ const onSelectionChange = (val) => {
 
 // 搜索
 const onSearch = () => {
-  console.log('查询条件:', queryParam.value);
-  // TODO: 调用 API 查询
+    // TODO: 调用 API 查询
+    Object.assign(pageQueryPara.usersDto, queryParam.value);
+    pageQuery();
 };
+const saveUser = () => { 
+    if (currentEditIndex.value == null) {
+        userAdd(user.value)
+        tableData.value.push(user.value)
+        dialogAddVisible.value = false
+    } else {
+        selectedRows.value[currentEditIndex.value] = user.value
+        dialogEditVisible.value = false
+    }
+    user.value.id = null
+    user.value.uuid = null
+    user.value.email = null
+    user.value.username = null
+    user.value.phone = null
+}
 
 // 新增
 const handleAdd = () => {
-  console.log('新增发票');
-  // TODO: 跳转或弹窗
+    // TODO: 跳转或弹窗
+  dialogAddVisible.value = true
 };
 
 // 编辑
 const handleEdit = (index, row) => {
-  console.log('编辑:', row);
+    user.value = row
+    dialogEditVisible.value = true
+    currentEditIndex.value = index
   // TODO: 编辑逻辑
 };
 
 // 单个删除
 const handleDeleteOne = (index, row) => {
   dialogTitle.value = `是否删除用户 ${row.id}？`;
-  deleteType.value = 'single';
+    deleteType.value = 'single';
+  ids.value.push(row.id)
   currentIndex.value = index;
     dialogVisible.value = true;
   console.log('删除:', dialogVisible.value)
@@ -177,12 +234,14 @@ const handleDeleteBatch = () => {
 // 确认删除
 const confirmDelete = () => {
   if (deleteType.value === 'single' && currentIndex.value !== null) {
-    tableData.value.splice(currentIndex.value, 1);
+      tableData.value.splice(currentIndex.value, 1);
+    userDelete(ids.value)
     ElMessage.success('删除成功');
   } else if (deleteType.value === 'batch') {
     // 这里可以按 ID 过滤，或根据选中项删除
     const selectedIds = selectedRows.value.map(r => r.id);
-    tableData.value = tableData.value.filter(row => !selectedIds.includes(row.id));
+      tableData.value = tableData.value.filter(row => !selectedIds.includes(row.id));
+    userDelete(selectedIds)
     ElMessage.success('批量删除成功');
   }
   // 关闭弹窗

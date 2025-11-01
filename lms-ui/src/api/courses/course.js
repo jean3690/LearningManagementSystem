@@ -5,13 +5,13 @@ export const coursesPage = async (pageQuery) => {
     return request({
         url: `${baseUrl}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
         method: "get",
-        params: pageQuery.courses
+        params: pageQuery.coursesDto
     })
 }
 export const coursesDelete = async (ids) => {
     return request({
         url: `${baseUrl}/delete`,
-        method: "delete",
+        method: "post",
         data: ids
     })
 }

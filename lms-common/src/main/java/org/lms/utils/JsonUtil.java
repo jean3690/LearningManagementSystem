@@ -7,16 +7,22 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 
 @Slf4j
 public class JsonUtil {
     private final static ObjectMapper objectMapper = new ObjectMapper();
     private static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
     static {
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(Instant.class, InstantSerializer.INSTANCE);
+        objectMapper.registerModule(javaTimeModule);
         objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);

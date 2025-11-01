@@ -34,11 +34,6 @@ public class OrdersController {
     public Result add(@RequestBody OrdersDetails ordersDetails){
         return ordersService.add(ordersDetails);
     }
-    @PutMapping("/update")
-    @Operation(summary = "修改")
-    public Result update(@RequestBody OrdersDetails ordersDetails){
-        return ordersService.update(ordersDetails);
-    }
     @DeleteMapping("/delete/{ids}")
     @Operation(summary = "删除")
     public Result delete(@PathVariable("ids")String ids){

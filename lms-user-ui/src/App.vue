@@ -8,7 +8,3 @@
 <script setup>
 import Counter from './components/Counter.jsx';
 </script>
-
-<style scoped>
-
-</style>

@@ -4,7 +4,7 @@ export const couponsPage = async (pageQuery) => {
   return await request({
       method: "get",
       url: `${commonPath}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
-      data: pageQuery.coupons
+      params: pageQuery.couponsDto
   })
 }
 export const couponsAdd = async (coupons) => {
@@ -23,7 +23,7 @@ export const couponsUpdate = async (coupons) => {
 }
 export const couponsDelete = async (ids) => {
   return await request({
-      method: "delete",
+      method: "post",
       url: `${commonPath}/delete`,
       data: ids
   })

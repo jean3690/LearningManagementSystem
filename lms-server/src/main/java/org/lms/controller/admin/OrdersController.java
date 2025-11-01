@@ -26,7 +26,7 @@ public class OrdersController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody OrdersDto ordersDto){
+                       @ModelAttribute OrdersDto ordersDto){
         return ordersService.page(pageNum,pageSize,ordersDto);
     }
     @PostMapping("/add")

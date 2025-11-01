@@ -23,7 +23,7 @@ public class CourseModulesController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                        @RequestBody CourseModulesDto courseModulesDto){
+                        @ModelAttribute CourseModulesDto courseModulesDto){
         return courseModulesService.page(pageNum,pageSize,courseModulesDto);
     }
     @PostMapping("/add")
@@ -36,7 +36,7 @@ public class CourseModulesController {
     public Result update(@RequestBody CourseModulesDto courseModulesDto){
         return courseModulesService.update(courseModulesDto);
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除课程模块")
     public Result delete(@RequestBody List<Long> ids){
         return courseModulesService.delete(ids);

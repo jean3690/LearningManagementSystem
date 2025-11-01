@@ -4,13 +4,14 @@ export const ordersPage = async (pageQuery) => {
   return request({
     url: `${baseUrl}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
     method: "get",
-    params: pageQuery.orders,
+    params: pageQuery.ordersDto,
   });
 }
 export const ordersDelete = async (ids) => {
     return request({
         url: `${baseUrl}/delete/${ids}`,
-        method: "delete"
+        method: "post",
+        data: ids
     })
 }
 export const ordersUpdate = async (order) => {

@@ -10,7 +10,7 @@ export const courseReviewsPage = async (pageQuery) => {
 export const courseReviewsDelete = async (ids) => {
     return await request({
       url: `${baseUrl}/delete`,
-      method: "delete",
+      method: "post",
       data: ids,
     })
 }

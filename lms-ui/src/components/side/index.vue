@@ -85,12 +85,12 @@ const isCollapse = ref(false)
 const array = ref([
   { name: '用户管理接口', path: 'user' },
   { name: '课程管理接口', path: 'course' },
-  { name: '课程模块管理接口', path: 'module' },
-  { name: '课程课时内容管理接口', path: 'section' },
+  { name: '课程模块管理接口', path: 'courseModule' },
+  { name: '课程课时内容管理接口', path: 'lessonProgress' },
   { name: '分类管理接口', path: 'category' },
-  { name: '课程报名管理接口', path: 'courseEnroll' },
-  { name: '课程评论管理接口', path: 'courseComment' },
-  { name: '课程学习进度管理接口', path: 'courseStudy' },
+  { name: '课程报名管理接口', path: 'enrollment' },
+  { name: '课程评论管理接口', path: 'courseReviews' },
+  { name: '课程学习进度管理接口', path: 'lesson' },
   { name: '发票管理接口', path: 'invoice' },
   { name: '优惠券管理接口', path: 'coupon' },
   { name: '订单管理接口', path: 'order' }

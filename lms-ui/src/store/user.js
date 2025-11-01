@@ -1,19 +1,21 @@
 import { defineStore } from "pinia";
+import { StorageUtils } from "@/utils";
 
 export const useUserStore = defineStore("user", {
     state: () => ({
-        name: "zhangsan",
-        age: 18,
-        address: "北京市",
+        token: "",
+        user: {}
     }),
-    getters: {
-        getName(state) {
-            return state.name + "!!!";
-        }
-    },
     actions: {
-        updateName(name) {
-            this.name = name;
+        setToken(token) {
+            this.token = token;
+            StorageUtils.setToken(token);
+        },
+        setUser(user) {
+            this.user = user;
+        },
+        clearUser() {
+            this.user = {};
         }
     }
 });

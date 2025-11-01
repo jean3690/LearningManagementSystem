@@ -4,7 +4,7 @@ export const courseModulePage = async (pageQuery) => {
     return await request({
         method: "get",
         url: `${commonPath}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
-        data: pageQuery.courseModule
+        params: pageQuery.courseModulesDto
     })
 }
 
@@ -26,7 +26,7 @@ export const courseModuleUpdate = async (courseModule) => {
 
 export const courseModuleDelete = async (ids) => {
     return await request({
-        method: "delete",
+        method: "post",
         url: `${commonPath}/delete`,
         data: ids
     })

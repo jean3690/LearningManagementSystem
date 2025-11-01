@@ -23,7 +23,7 @@ public class InvoicesController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody InvoicesDto invoicesDto){
+                       @ModelAttribute InvoicesDto invoicesDto){
         return invoicesService.page(pageNum,pageSize,invoicesDto);
     }
     @GetMapping("/query/{id}")

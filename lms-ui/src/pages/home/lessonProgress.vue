@@ -81,14 +81,14 @@
         <el-table-column prop="updatedAt" label="修改时间" align="center" width="180" />
       <el-table-column label="操作" width="150" align="center">
         <template #default="scope">
-          <el-button type="text" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="text" size="mini" @click="handleDeleteOne(scope.$index, scope.row)">删除</el-button>
+          <el-button type="text" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="handleDeleteOne(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="flex justify-center">
-            <el-pagination v-model:current-page="pageQueryParam.page" v-model:page-size="pageQueryParam.pageSize"
-             background layout="prev, pager, next" :total="100" />
+            <el-pagination v-model:current-page="pageQueryParam.pageNum" v-model:page-size="pageQueryParam.pageSize"
+             background layout="prev, pager, next,jumper,->,total" v-model:total="pageQueryParam.total" />
         </div>
     <!-- 删除确认弹窗 -->
     <Dialog
@@ -96,12 +96,64 @@
       v-model:visible="dialogVisible"
       @confirm="confirmDelete"
     />
+    <el-dialog v-model:visible="dialogAddVisible" title="添加" width="500px">
+        <el-form ref="form" :model="lessonProgress" label-width="80px">
+            <el-form-item label="报名Id"> 
+                <el-input v-model="lessonProgress.enrollmentId" placeholder="请输入报名id" />
+            </el-form-item>
+            <el-form-item label="用户名"> 
+                <el-input v-model="lessonProgress.username" placeholder="请输入用户名" />
+            </el-form-item>
+            <el-form-item label="课程Id"> 
+                <el-input v-model="lessonProgress.lessonId" placeholder="请输入课程id" />
+            </el-form-item>
+            <el-form-item label="状态"> 
+                <el-select v-model="lessonProgress.status" placeholder="请选择状态">
+                    <el-option label="已完成" value="1" />
+                    <el-option label="未完成" value="0" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="进度百分比"> 
+                <el-input v-model="lessonProgress.progressPercentage" placeholder="请输入进度百分比" />
+            </el-form-item>
+            <el-form-item label="最后位置"> 
+                <el-input v-model="lessonProgress.lastPosition" placeholder="请输入最后位置" />
+            </el-form-item>
+            <el-form-item label="开始时间"> 
+                <el-date-picker
+                    v-model="lessonProgress.startedAt"
+                    type="date"
+                    placeholder="选择开始时间"
+                >
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="完成时间"> 
+                <el-date-picker
+                    v-model="lessonProgress.completedAt"
+                    type="date"
+                    placeholder="选择完成时间"
+                >
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="修改时间"> 
+                <el-date-picker
+                    v-model="lessonProgress.updatedAt"
+                    type="date"
+                    placeholder="选择修改时间"
+                >
+                </el-date-picker>
+            </el-form-item>
+            <el-button type="primary" @click="save">确定</el-button>
+            <el-button @click="dialogAddVisible = false">取消</el-button>
+        </el-form>
+        </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Dialog from '@/components/dialog/index.vue';
+import { lessonProgressPage } from '../../api/lessonprogress/lessonprogress';
 // 查询参数
 const queryParam = ref({
     id: null,
@@ -112,26 +164,37 @@ const queryParam = ref({
     completedAt: null,
     updateAt: null
 });
+const lessonProgress = ref({
+  id: null,
+  enrollmentId: null,
+  username: null,
+  lessonId: null,
+  status: null,
+  progressPercentage: null,
+  lastPosition: null,
+  startedAt: null,
+  completedAt: null,
+  updatedAt: null,
+})
 const pageQueryParam = reactive({
-    page: 1,
-    pageSize: 10
+    total: 0,
+    pageNum: 1,
+    pageSize: 10,
+    lessonProgress: lessonProgress.value
 });
-
 // 表格数据（示例）
-const tableData = ref([
-  {
-        id: 1,
-        enrollmentId: 1,
-        username: '张三',
-        lessonId: 1,
-        status: 1,
-        progressPercentage: 50,
-        lastPosition: '30',
-        startedAt: '2022-01-01 10:00:00',
-        completedAt: '2022-01-01 12:00:00',
-        updatedAt: '2022-01-01 12:00:00',
-  }
-]);
+const tableData = ref([]);
+const pageQuery = () => {
+    lessonProgressPage(pageQueryParam).then(res => {
+        tableData.value = res.list;
+        pageQueryParam.total = res.total;
+        pageQueryParam.pageNum = res.pageNum;
+        pageQueryParam.pageSize = res.pageSize;
+     })
+}
+onMounted(() => {
+    pageQuery();
+})
 watch(pageQueryParam, () => {
    console.log('页码或页大小变化:', pageQueryParam); 
 }, { deep: true })
@@ -141,9 +204,12 @@ const selectedRows = ref([]);
 
 // 弹窗控制
 const dialogVisible = ref(false);
+const dialogAddVisible = ref(false);
+const dialogEditVisible = ref(false);
 const dialogTitle = ref('是否删除选中数据？');
 const deleteType = ref(''); // 'batch' | 'single'
 const currentIndex = ref(null);
+const currentEditIndex = ref(null);
 
 // 监听选择变化
 const onSelectionChange = (val) => {
@@ -152,29 +218,44 @@ const onSelectionChange = (val) => {
 
 // 搜索
 const onSearch = () => {
-  console.log('查询条件:', queryParam.value);
-  // TODO: 调用 API 查询
+    // TODO: 调用 API 查询
+    Object.assign(pageQueryParam.lessonProgress, queryParam.value);
+    pageQuery();
 };
 
 // 新增
 const handleAdd = () => {
-  console.log('新增');
-  // TODO: 跳转或弹窗
+    // TODO: 跳转或弹窗
+    Object.assign(lessonProgress.value, {
+        id: null,
+        enrollmentId: null,
+        username: null,
+        lessonId: null,
+        status: null,
+        progressPercentage: null,
+        lastPosition: null,
+        startedAt: null,
+        completedAt: null,
+        updatedAt: null,
+    });
+    dialogAddVisible.value = true;
 };
 
 // 编辑
 const handleEdit = (index, row) => {
-  console.log('编辑:', row);
+    currentEditIndex.value = index;
+    const rawRow = toRaw(row);
+    Object.assign(lessonProgress.value, rawRow);
+    dialogEditVisible.value = true;
   // TODO: 编辑逻辑
 };
 
 // 单个删除
 const handleDeleteOne = (index, row) => {
-  dialogTitle.value = `是否删除课程评价 ${row.id}？`;
+  dialogTitle.value = `是否删除 ${row.id}？`;
   deleteType.value = 'single';
   currentIndex.value = index;
     dialogVisible.value = true;
-  console.log('删除:', dialogVisible.value)
 };
 
 // 批量删除

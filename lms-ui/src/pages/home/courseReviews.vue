@@ -65,8 +65,8 @@
       </el-table-column>
     </el-table>
     <div class="flex justify-center">
-            <el-pagination v-model:current-page="pageQueryParam.page" v-model:page-size="pageQueryParam.pageSize"
-             background layout="prev, pager, next" :total="100" />
+            <el-pagination v-model:current-page="pageQueryParam.pageNum" v-model:page-size="pageQueryParam.pageSize"
+             background layout="prev, pager, next,jumper,->,total" v-model:total="pageQueryParam.total" />
         </div>
     <!-- 删除确认弹窗 -->
     <Dialog
@@ -78,8 +78,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Dialog from '@/components/dialog/index.vue';
+import { courseReviewsDelete, courseReviewsPage } from '../../api/courseReviews/courseReviews';
 // 查询参数
 const queryParam = ref({
     id: null,
@@ -89,11 +90,22 @@ const queryParam = ref({
     createdAt: null,
     updatedAt: null,
 });
+const courseReviews = ref({
+  id: null,
+  courseId: null,
+  userId: null,
+  rating: null,
+  comment: null,
+  isApproved: 0,
+  createdAt: null,
+  updatedAt: null,
+})
 const pageQueryParam = reactive({
-    page: 1,
-    pageSize: 10
+    total: 0,
+    pageNum: 1,
+    pageSize: 10,
+    courseReviews: courseReviews.value
 });
-
 // 表格数据（示例）
 const tableData = ref([
   {
@@ -106,6 +118,17 @@ const tableData = ref([
         updatedAt: "2023-10-01 10:00:00"
   }
 ]);
+const pageQuery = () => {
+    courseReviewsPage(pageQueryParam).then(res => {
+        tableData.value = res.list;
+        pageQueryParam.total = res.total;
+        pageQueryParam.pageNum = res.pageNum;
+        pageQueryParam.pageSize = res.pageSize;
+    });
+}
+onMounted(() => {
+    pageQuery();
+})
 watch(pageQueryParam, () => {
    console.log('页码或页大小变化:', pageQueryParam); 
 }, { deep: true })
@@ -115,38 +138,82 @@ const selectedRows = ref([]);
 
 // 弹窗控制
 const dialogVisible = ref(false);
+const dialogAddVisible = ref(false);
+const dialogEditVisible = ref(false);
 const dialogTitle = ref('是否删除选中数据？');
 const deleteType = ref(''); // 'batch' | 'single'
 const currentIndex = ref(null);
-
+const currentEditIndex = ref(null);
+const ids = ref([]);
 // 监听选择变化
 const onSelectionChange = (val) => {
   selectedRows.value = val;
 };
+const cancel = () => { 
+    if (currentEditIndex.value !== null) {
+        Object.assign(courseReviews.value, {
+            id: null,
+            courseId: null,
+            userId: null,
+            rating: null,
+            comment: null,
+            isApproved: 0,
+            createdAt: null,
+            updatedAt: null,
+        })
+        dialogEditVisible = false
+    } else {
+        Object.assign(courseReviews.value, {
+            id: null,
+            courseId: null,
+            userId: null,
+            rating: null,
+            comment: null,
+            isApproved: 0,
+            createdAt: null,
+            updatedAt: null,
+        })
+        dialogAddVisible = false
+    }
+};
 
 // 搜索
 const onSearch = () => {
-  console.log('查询条件:', queryParam.value);
-  // TODO: 调用 API 查询
+    // TODO: 调用 API 查询
+  Object.assign(pageQueryParam.courseReviews, queryParam.value);
+    pageQuery();
 };
 
 // 新增
 const handleAdd = () => {
-  console.log('新增');
-  // TODO: 跳转或弹窗
+    // TODO: 跳转或弹窗
+    Object.assign(courseReviews.value, {
+    id: null,
+    courseId: null,
+    userId: null,
+    rating: null,
+    comment: null,
+    isApproved: 0,
+    createdAt: null,
+    updatedAt: null,
+    });
+    dialogAddVisible.value = true;
 };
 
 // 编辑
 const handleEdit = (index, row) => {
-  console.log('编辑:', row);
-  // TODO: 编辑逻辑
+    // TODO: 编辑逻辑
+    Object.assign(courseReviews.value, row);
+    currentEditIndex.value = index;
+    dialogEditVisible.value = true;
 };
 
 // 单个删除
 const handleDeleteOne = (index, row) => {
   dialogTitle.value = `是否删除课程评价 ${row.id}？`;
   deleteType.value = 'single';
-  currentIndex.value = index;
+    currentIndex.value = index;
+  ids.value.push(row.id)
     dialogVisible.value = true;
   console.log('删除:', dialogVisible.value)
 };
@@ -165,12 +232,14 @@ const handleDeleteBatch = () => {
 // 确认删除
 const confirmDelete = () => {
   if (deleteType.value === 'single' && currentIndex.value !== null) {
-    tableData.value.splice(currentIndex.value, 1);
+      tableData.value.splice(currentIndex.value, 1);
+    courseReviewsDelete(ids.value)
     ElMessage.success('删除成功');
   } else if (deleteType.value === 'batch') {
     // 这里可以按 ID 过滤，或根据选中项删除
     const selectedIds = selectedRows.value.map(r => r.id);
-    tableData.value = tableData.value.filter(row => !selectedIds.includes(row.id));
+      tableData.value = tableData.value.filter(row => !selectedIds.includes(row.id));
+    courseReviewsDelete(selectedIds)
     ElMessage.success('批量删除成功');
   }
   // 关闭弹窗

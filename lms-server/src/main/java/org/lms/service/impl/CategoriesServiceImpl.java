@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.lms.dto.CategoriesDto;
 import org.lms.entity.Categories;
 import org.lms.entity.Courses;
+import org.lms.exception.deleteFailException;
 import org.lms.mapper.CategoriesMapper;
 import org.lms.mapper.CoursesMapper;
 import org.lms.response.Result;
@@ -82,20 +83,23 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public Result delete(Long id) {
-        Courses courses = coursesMapper.findByCategoryId(id);
-        if(courses!=null){
+    public Result delete(List<Long> ids) {
+        List<Courses> coursesList=coursesMapper.listByCategoryId(ids);
+        if(!(coursesList!=null&&coursesList.size()==ids.size())){
             return Result.error("有课程有这个分类");
         }
         transactionTemplate.execute(status -> {
             try {
-                categoriesMapper.deleteByPrimaryKey(id);
+                categoriesMapper.deleteBatch(ids);
+                return 1;
             } catch (Exception e) {
                 status.setRollbackOnly();
+                throw new deleteFailException("删除错误");
             }
-            return null;
         });
-        stringRedisTemplate.opsForHash().delete(CATEGORY_HASH_TOKEN,id);
+        for (Long id : ids) {
+            stringRedisTemplate.opsForHash().delete(CATEGORY_HASH_TOKEN,id);
+        }
         return Result.success();
     }
 

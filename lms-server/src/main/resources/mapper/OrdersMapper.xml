@@ -43,14 +43,14 @@
             <result property="unitPrice" column="unit_price"/>
             <result property="discountAmount" column="order_item_discount_amount"/>
             <result property="finalPrice" column="final_price"/>
-            <result property="createdAt" column="order_item_create_at"/>
+            <result property="createdAt" column="order_item_created_at"/>
         </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,order_number,user_id,total_amount,discount_amount,tax_amount,
-        final_amount,coupon_id,status,payment_method,payment_id,
-        billing_address,created_at,updated_at
+        orders.id,orders.order_number,orders.user_id,orders.total_amount,orders.discount_amount,orders.tax_amount,
+        orders.final_amount,orders.coupon_id,orders.status,orders.payment_method,orders.payment_id,
+        orders.billing_address,orders.created_at,orders.updated_at
     </sql>
     <sql id="Order_Item_List">
         order_items.id as order_item_id,
@@ -60,7 +60,7 @@
         order_items.unit_price,
         order_items.discount_amount as order_item_discount_amount,
         order_items.final_price,
-        order_items.create_at as order_item_create_at
+        order_items.created_at as order_item_created_at
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -111,10 +111,10 @@
                 and billing_address = #{billingAddress}
             </if>
             <if test="createdAt != null">
-                and created_at &lt;= #{createdAt}
+                and created_at &gt;= #{createdAt}
             </if>
             <if test="updatedAt != null">
-                and updated_at &lt;= #{updatedAt}
+                and updated_at &gt;= #{updatedAt}
             </if>
         </where>
     </select>
@@ -160,10 +160,10 @@
                 and billing_address = #{billingAddress}
             </if>
             <if test="createdAt != null">
-                and created_at &lt;= #{createdAt}
+                and created_at &gt;= #{createdAt}
             </if>
             <if test="updatedAt != null">
-                and updated_at &lt;= #{updatedAt}
+                and updated_at &gt;= #{updatedAt}
             </if>
         </where>
     </select>

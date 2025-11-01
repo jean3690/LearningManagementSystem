@@ -1,6 +1,7 @@
 package org.lms.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.lms.Enum.OpreationType;
 import org.lms.annotation.AutoFill;
 import org.lms.dto.CategoriesDto;
@@ -32,4 +33,6 @@ public interface CategoriesMapper {
     ArrayList<Categories> list(List<Long> ids);
 
     List<Categories> selectByPage(CategoriesDto categoriesDto);
+
+    void deleteBatch(@Param("ids") List<Long> ids);
 }

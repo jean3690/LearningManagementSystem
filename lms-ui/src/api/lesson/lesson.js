@@ -5,7 +5,7 @@ export const lessonPage = async (pageQuery) => {
     return request({
         url: `${baseUrl}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
         method: "get",
-        params: pageQuery.lesson
+        params: pageQuery.lessonsDto
     })
 }
 
@@ -27,7 +27,7 @@ export const lessonUpdate = async (lesson) => {
 export const lessonDelete = async (ids) => {
     return request({
         url: `${baseUrl}/delete`,
-        method: "delete",
+        method: "post",
         data: ids
     })
 }

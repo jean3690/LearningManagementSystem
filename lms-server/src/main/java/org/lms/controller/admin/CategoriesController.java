@@ -9,8 +9,8 @@ import org.lms.response.Result;
 import org.lms.service.CategoriesService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-
 @RestController("adminCategoriesController")
 @RequestMapping("/admin/categories")
 @Slf4j
@@ -53,10 +53,14 @@ public class CategoriesController {
     /**
      *
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{ids}")
     @Operation(summary = "删除分类")
-    public Result delete(@PathVariable("id") Long id){
-        return categoriesService.delete(id);
+    public Result delete(@PathVariable("ids") String ids){
+        List<Long> list = new ArrayList<>();
+        for (String id : ids.split(",")) {
+            list.add(Long.parseLong(id));
+        }
+        return categoriesService.delete(list);
     }
 
     /**
@@ -76,7 +80,7 @@ public class CategoriesController {
     @Operation(summary = "分页查询")
     public Result pageQuery(@PathVariable("pageNum") Integer pageNum,
                             @PathVariable("pageSize") Integer pageSize,
-                            @RequestBody CategoriesDto categoriesDto){
+                            @ModelAttribute CategoriesDto categoriesDto){
         return categoriesService.pageQuery(pageNum,pageSize,categoriesDto);
     }
 

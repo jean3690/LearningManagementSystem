@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalHandler {
     @ExceptionHandler(Exception.class)
     public Result globalHandlerAdvice(Exception e){
-        return Result.error("异常"+e.getCause());
+        return Result.error("异常"+e.getMessage());
     }
 
 }

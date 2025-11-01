@@ -22,10 +22,10 @@ public class CourseReviewsController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody CourseReviews courseReviews){
+                       @ModelAttribute CourseReviews courseReviews){
         return courseReviewsService.page(pageNum,pageSize,courseReviews);
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除课程评价")
     public Result delete(@RequestBody List<Long> ids){
         return courseReviewsService.delete(ids);

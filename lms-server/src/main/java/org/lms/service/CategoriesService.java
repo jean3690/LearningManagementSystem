@@ -21,7 +21,7 @@ public interface CategoriesService  {
 
     void update(CategoriesDto categoriesDto);
 
-    Result delete(Long id);
+    Result delete(List<Long> ids);
 
     ArrayList<Categories> list(List<Long> ids);
 

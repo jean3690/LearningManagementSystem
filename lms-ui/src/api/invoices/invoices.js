@@ -5,7 +5,7 @@ export const invoicesPage = async (pageQuery) => {
   return await request({
     url: `${baseUrl}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
     method: "get",
-    data: pageQuery.invoices,
+    data: pageQuery.invoicesDto,
   });
 }
 export const invoicesAdd = async (invoice) => {

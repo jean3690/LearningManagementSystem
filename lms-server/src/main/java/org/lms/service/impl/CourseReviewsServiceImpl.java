@@ -13,7 +13,6 @@ import org.lms.utils.JsonUtil;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -32,13 +31,11 @@ public class CourseReviewsServiceImpl implements CourseReviewsService {
     private final CourseReviewsMapper courseReviewsMapper;
     private final StringRedisTemplate stringRedisTemplate;
     private final ApplicationEventPublisher eventPublisher;
-    private final TransactionTemplate transactionTemplate;
 
-    public CourseReviewsServiceImpl(CourseReviewsMapper courseReviewsMapper, StringRedisTemplate stringRedisTemplate, ApplicationEventPublisher eventPublisher, TransactionTemplate transactionTemplate) {
+    public CourseReviewsServiceImpl(CourseReviewsMapper courseReviewsMapper, StringRedisTemplate stringRedisTemplate, ApplicationEventPublisher eventPublisher) {
         this.courseReviewsMapper = courseReviewsMapper;
         this.stringRedisTemplate = stringRedisTemplate;
         this.eventPublisher = eventPublisher;
-        this.transactionTemplate = transactionTemplate;
     }
 
     @Override

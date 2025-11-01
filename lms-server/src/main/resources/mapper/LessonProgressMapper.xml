@@ -17,8 +17,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,enrollment_id,lesson_id,status,progress_percentage,last_position,
-        started_at,completed_at,updated_at
+        lesson_progress.id,lesson_progress.enrollment_id,lesson_progress.lesson_id,lesson_progress.status,lesson_progress.progress_percentage,lesson_progress.last_position,
+        lesson_progress.started_at,lesson_progress.completed_at,lesson_progress.updated_at
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -39,7 +39,7 @@
             and status = #{lessonProgressStatus}
         </where>
         ORDER BY
-        <foreach collection="ids" item="id" open="( enrollment_id," close=")" separator=",">
+        <foreach collection="ids" item="id" open="enrollment_id," separator=",">
             #{id}
         </foreach>
     </select>

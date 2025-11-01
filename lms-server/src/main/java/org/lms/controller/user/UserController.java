@@ -15,7 +15,7 @@ import java.util.List;
 @RestController("userUserController")
 @Slf4j
 @RequestMapping("/user/user")
-@Tag(name = "用户管理接口")
+@Tag(name = "用户接口")
 public class UserController {
     private final UsersService usersService;
 
@@ -33,18 +33,6 @@ public class UserController {
     @Operation(summary = "登录")
     public Result login(@RequestBody UsersDto usersDto, HttpSession httpSession){
         return usersService.login(usersDto,httpSession);
-    }
-
-    /**
-     *
-     * @param usersDto
-     * @return
-     */
-    @PostMapping("/add")
-    @Operation(summary = "添加用户")
-    public Result add(@RequestBody UsersDto usersDto){
-        log.info("{}",usersDto);
-        return usersService.addUser(usersDto);
     }
 
     /**
@@ -71,20 +59,6 @@ public class UserController {
 
     /**
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    @GetMapping("/page/{pageNum}/{pageSize}")
-    @Operation(summary = "分页查询")
-    public Result page(@PathVariable("pageNum") Integer pageNum,
-                       @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody UsersDto usersDto){
-        return usersService.pageQuery(pageNum,pageSize,usersDto);
-    }
-
-    /**
-     *
      * @param id
      * @return
      */
@@ -94,25 +68,4 @@ public class UserController {
         return usersService.queryById(id);
     }
 
-    /**
-     *
-     * @param ids
-     * @return
-     */
-    @GetMapping("/list")
-    @Operation(summary = "根据list查询用户集合")
-    public Result list(@RequestParam("ids")List<Long> ids){
-        return usersService.list(ids);
-    }
-
-    /**
-     *
-     * @param ids
-     * @return
-     */
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除用户")
-    public Result delete(@RequestBody List<Long> ids){
-        return usersService.remove(ids);
-    }
 }

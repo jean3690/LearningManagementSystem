@@ -1,13 +1,32 @@
 import request from "@/network/request"
 const baseUrl = "/admin/user";
 
+// 用户登录
+export const login = async (credentials) => {
+    return request({
+        url: `${baseUrl}/login`,
+        method: "post",
+        data: credentials
+    })
+}
+
+// 用户登出
+export const logout = async () => {
+    return request({
+        url: `${baseUrl}/logout`,
+        method: "post"
+    })
+}
+// 以下为管理员功能
+
 export const userPage = async (pageQuery) => {
     return request({
         url: `${baseUrl}/page/${pageQuery.pageNum}/${pageQuery.pageSize}`,
         method: "get",
-        params: pageQuery.user
+        params: pageQuery.usersDto
     })
 }
+
 export const userDelete = async (ids) => {
     return request({
         url: `${baseUrl}/delete`,
@@ -15,6 +34,7 @@ export const userDelete = async (ids) => {
         data: ids
     })
 }
+
 export const userUpdate = async (user) => {
     return request({
         url: `${baseUrl}/update`,
@@ -22,6 +42,7 @@ export const userUpdate = async (user) => {
         data: user
     })
 }
+
 export const userAdd = async (user) => {
     return request({
         url: `${baseUrl}/add`,

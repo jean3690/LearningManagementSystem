@@ -1,6 +1,6 @@
 import axios from "axios";
 import { MessageUtil } from "../utils";
-import router from "../router";
+import eventEmitter from "../event/eventEmitter";
 
 // 创建axios实例
 const instance = axios.create({
@@ -83,12 +83,12 @@ instance.interceptors.response.use(
             // token过期或无效
             MessageUtil.confirm('您的登录状态已过期，请重新登录', '系统提示', '重新登录', '取消', 'warning').then(() => {
                 localStorage.removeItem('token');
-                router.push('/login');
+                eventEmitter.emit('API:logout');
             });
             return Promise.reject(new Error(message || '登录状态已过期'));
         } else if (code === 403) {
             // 权限不足
-            router.push('/403');
+            eventEmitter.emit('API:logout');
             return Promise.reject(new Error(message || '权限不足'));
         } else {
             // 其他业务错误
@@ -127,11 +127,10 @@ instance.interceptors.response.use(
                 errorMessage = '未授权，请登录';
                 // 清除token并跳转到登录页
                 localStorage.removeItem('token');
-                router.push('/login');
+                eventEmitter.emit('API:logout');
                 break;
             case 403:
                 errorMessage = '拒绝访问';
-                router.push('/403');
                 break;
             case 404:
                 errorMessage = '请求地址不存在';

@@ -24,7 +24,7 @@ public class EnrollmentsController {
     @Operation(summary = "分页查询")
     public Result page(@PathVariable("pageNum") Integer pageNum,
                        @PathVariable("pageSize") Integer pageSize,
-                       @RequestBody Enrollments enrollments){
+                       @ModelAttribute Enrollments enrollments){
         return enrollmentsService.page(pageNum,pageSize,enrollments);
     }
     @PutMapping("/update")
@@ -32,7 +32,7 @@ public class EnrollmentsController {
     public Result update(@RequestBody Enrollments enrollments){
         return enrollmentsService.update(enrollments);
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Operation(summary = "删除课程报名")
     public Result delete(@RequestBody List<Long> ids){
         return enrollmentsService.delete(ids);
